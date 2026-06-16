@@ -1,0 +1,25 @@
+# KoncoKemo
+
+**Pusat Pemberdayaan, Edukasi dan Komunitas Pasien Kanker**
+
+## Tentang Kami
+KoncoKemo adalah platform digital yang didedikasikan untuk mendampingi pasien kanker yang sedang menjalani perawatan kemoterapi. Platform ini menyediakan sumber informasi yang andal, dukungan moral, edukasi mendalam mengenai efek samping, serta berbagai layanan manajemen kesehatan mandiri. Website ini dibangun atas inisiatif Dr. dr. Shinta Oktya Wardhani, pakar Hematologi Onkologi Medik, untuk memastikan keadilan akses informasi dan dukungan pasien di seluruh Indonesia.
+
+## Layanan Utama
+- **Cek Risiko Mandiri Kemoterapi**: Layanan evaluasi pasca kemoterapi untuk menilai kondisi dan menentukan langkah medis yang tepat melalui form asesmen cepat.
+- **Edukasi Kemoterapi**: Koleksi panduan dan artikel terstruktur mengenai proses kemoterapi, efek yang diharapkan, diet nutrisi, dan manajemen psikologis.
+- **Cerita Konco (Komunitas)**: Kumpulan narasi perjalanan penyintas yang menginspirasi dan membangun kekuatan bagi sesama pasien yang sedang menjalani perawatan.
+- **Direktori Dokter Onkologi**: Informasi lokasi, profil, dan spesialisasi dokter kanker untuk mempermudah akses pelayanan.
+
+## Tujuan Misi
+1. **Mengurangi kesenjangan pemahaman** tentang prosedur kemoterapi dengan materi medis yang mudah dicerna masyarakat awam.
+2. **Memberikan pendampingan komprehensif** tidak hanya di lingkup fisik medis tapi juga ketahanan psikososial dan spiritual pasien.
+3. **Membangun kekuatan berbasis komunitas** ("konco" berarti teman dalam bahasa Jawa) melalui sharing pengalaman yang saling menguatkan.
+
+## Akses
+- Halaman Utama: https://koncokemo.com/
+- Edukasi: https://koncokemo.com/edukasi
+- Cek Medis Mandiri: https://koncokemo.com/cek-mandiri
+- Cerita Inspirasi: https://koncokemo.com/cerita-konco
+- Daftar Dokter Spesialis: https://koncokemo.com/dokter-kemo
+- Founder (Dr. dr. Shinta Oktya Wardhani): https://koncokemo.com/founder

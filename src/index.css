@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  
+  --color-primary-50: #f5f3fa;
+  --color-primary-100: #eae4f5;
+  --color-primary-200: #d6caec;
+  --color-primary-300: #b9a8e0;
+  --color-primary-400: #9a7fd0;
+  --color-primary-500: #815ac1;
+  --color-primary-600: #6d42aa;
+  --color-primary-700: #5c358f;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* React Quill Customizations */
+.ql-toolbar.ql-snow {
+  @apply border-0! border-b! border-gray-200! bg-gray-50! p-3! rounded-t-xl! sticky top-0 z-40;
+}
+
+.ql-container.ql-snow {
+  @apply border-none!;
+}
+
+.ql-editor {
+  @apply min-h-[400px]! text-base! font-sans! prose max-w-none text-gray-800 p-6!;
+}
+
+.ql-picker-options {
+  @apply z-[110]!;
+}
+
+.ql-editor p {
+  @apply mb-4!;
+}
+
+.ql-editor h1, .ql-editor h2, .ql-editor h3 {
+  @apply font-display! font-bold! mt-8! mb-4!;
+}
+
+/* Prose Overrides for Rich Text */
+.prose img {
+  @apply block w-full max-h-[16rem] md:max-h-[20rem] overflow-hidden object-contain my-8 mx-auto;
+}
+
+.prose {
+  @apply max-w-none! w-full! overflow-x-hidden break-words;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@keyframes rotate-gradient {
+  100% { transform: rotate(360deg); }
+}
+.animate-rotate-gradient {
+  animation: rotate-gradient 8s linear infinite;
+}
+
+.greeting-bubble-line {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  right: -100%;
+  bottom: -100%;
+  background: conic-gradient(from 0deg, var(--color-primary-500), transparent 75%, var(--color-primary-500));
+}

@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Allow AI bots explicitly (some block them by default, we want them)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: OmgiliBot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Prevent indexing admin area
+Disallow: /admin/
+Disallow: /login/
+
+Sitemap: https://koncokemo.com/sitemap.xml

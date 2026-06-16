@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="KoncoKemo (Konco Kemo) adalah Pusat Pemberdayaan, Edukasi dan Komunitas Pasien Kanker. Dukungan edukatif dan komunitas untuk pejuang kanker." />
+    <!-- AI & SEO Meta -->
+    <meta name="keywords" content="konco kemo, koncokemo, kemoterapi, pasien kanker, pendampingan kanker, cek mandiri kemoterapi" />
+    <meta name="author" content="Dr. dr. Shinta Oktya Wardhani" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    
+    <meta name="theme-color" content="#815ac1" />
+    
+    <!-- Meta PWA / Add to Home Screen -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="KoncoKemo" />
+    
+    <!-- Icons -->
+    <link rel="shortcut icon" href="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" />
+    <link rel="icon" type="image/x-icon" href="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <title>KoncoKemo | Konco Kemo - Pusat Pemberdayaan & Edukasi Pasien Kanker</title>
+
+    <!-- Structured Data for Brand Indexing -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "KoncoKemo",
+        "alternateName": ["Konco Kemo", "KoncoKemo Indonesia"],
+        "url": "https://koncokemo.com",
+        "logo": "https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44",
+        "description": "KoncoKemo (Konco Kemo) adalah Pusat Pemberdayaan, Edukasi dan Komunitas Pasien Kanker Indonesia.",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+6281234567890",
+          "contactType": "customer service"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <style>
+        .pre-splash {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        }
+        .pre-logo {
+          width: 64px;
+          height: 64px;
+          animation: logo-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes logo-pulse {
+          0% { transform: scale(0.9); opacity: 0.5; }
+          50% { transform: scale(1); opacity: 1; }
+          100% { transform: scale(0.9); opacity: 0.5; }
+        }
+      </style>
+      <div class="pre-splash">
+        <img src="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" class="pre-logo" alt="KoncoKemo" />
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registered successfully!', reg.scope))
+            .catch(err => console.log('Service Worker registration failed:', err));
+        });
+      }
+    </script>
+  </body>
+</html>
+
