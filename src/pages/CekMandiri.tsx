@@ -456,6 +456,11 @@ function CekMandiri() {
 
     // Draw Disclaimer on Page 1
     doc.setPage(1);
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(8.5);
+    doc.setTextColor(109, 66, 170); // Theme color primary-600
+    doc.text("Tetap Semangat, Anda Adalah Manusia Hebat. Kanker Bukanlah Akhir. Obat Paling Mujarab Adalah Keyakinan, Semangat Dan Harapan.", 105, 252, { align: "center" });
+
     doc.setFont("Helvetica", "italic");
     doc.setFontSize(7.5);
     doc.setTextColor(140, 140, 140);

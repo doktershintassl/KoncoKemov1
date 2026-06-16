@@ -221,7 +221,7 @@ export default function TataLaksana() {
     });
 
     currentY += 10;
-    if (currentY > 270) {
+    if (currentY > 235) { // Adjusted to give plenty of room on the page
       doc.addPage();
       currentY = 20;
     }
@@ -236,6 +236,27 @@ export default function TataLaksana() {
     const warningText = "Panduan tatalaksana ini bersifat Murni Rekomendasi berdasarkan riwayat dan algoritma asesmen dan bukan tatalaksana baku. Tatalaksana yang diberikan sepenuhnya merupakan intervensi dan pertimbangan dokter pemeriksa di faskes setempat.";
     const warningLines = doc.splitTextToSize(warningText, 170);
     doc.text(warningLines, marginX, currentY + 5);
+
+    // Update currentY for doctor encouraging note
+    currentY += 5 + (warningLines.length * 4.5) + 8;
+    
+    if (currentY > 265) {
+      doc.addPage();
+      currentY = 20;
+    }
+
+    // Fellow Doctor encouraging box
+    doc.setFillColor(245, 243, 250); // Light primary-50 color
+    doc.setDrawColor(214, 202, 236); // primary-200 border
+    doc.setLineWidth(0.4);
+    doc.rect(marginX, currentY, 170, 16, "FD");
+
+    doc.setTextColor(109, 66, 170); // Theme color primary-600 (Purple)
+    doc.setFont("Helvetica", "italic");
+    doc.setFontSize(9);
+    const doctorNote = "Terima kasih sejawat telah membantu menolong pasien Kanker Indonesia, mohon tularkan semangat dan harapan pada pasien hebat ini.";
+    const doctorNoteLines = doc.splitTextToSize(doctorNote, 160);
+    doc.text(doctorNoteLines, marginX + 5, currentY + (doctorNoteLines.length > 1 ? 6.5 : 10));
 
     const totalPages = doc.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
