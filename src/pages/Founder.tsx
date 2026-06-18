@@ -213,8 +213,7 @@ const FounderPage = () => {
         <div className="max-w-7xl mx-auto px-[1rem] sm:px-6 relative z-10">
           <div className="mb-[2rem] md:mb-10 flex flex-col md:flex-row md:items-end justify-between gap-[1rem] md:gap-6">
             <div className="max-w-2xl">
-              <h2 className="text-[1.75rem] sm:text-[2.25rem] lg:text-[3rem] font-display font-bold text-gray-900 mb-2 tracking-tight leading-tight">Lokasi Pelayanan</h2>
-              <p className="text-[0.875rem] sm:text-[1rem] text-gray-500 font-medium">Tempat beliau melayani konsultasi dan perawatan profesional dengan standar medis terbaik.</p>
+              <h2 className="text-[1.75rem] sm:text-[2.25rem] lg:text-[3rem] font-display font-bold text-gray-900 mb-2 tracking-tight leading-tight">Lokasi Praktik</h2>
             </div>
           </div>
 
