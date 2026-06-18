@@ -82,6 +82,13 @@ export function HeroSlider() {
 
   return (
     <section className="relative w-full min-h-[500px] md:min-h-0 md:aspect-[24/10] overflow-hidden bg-gray-50 flex items-center justify-center">
+      {/* Preload all images so they are ready before the slide transitions */}
+      <div className="hidden" aria-hidden="true">
+        {slides.map((slide) => (
+          <img key={`preload-${slide.id}`} src={slide.image} alt="" />
+        ))}
+      </div>
+
       <AnimatePresence initial={false} mode="popLayout">
         <motion.div
           key={currentSlide}

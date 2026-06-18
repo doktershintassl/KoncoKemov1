@@ -90,7 +90,7 @@ export function EdukasiList() {
             transition={{ delay: 0.2 }}
             className="text-gray-500 text-[0.875rem] sm:text-[1rem]"
           >
-            Temukan materi edukasi, artikel, dan video yang diperbarui untuk mendukung perjalanan Anda.
+            Dapatkan informasi dan edukasi akurat dari expert bagi pejuang kanker dan komunitas.
           </motion.p>
         </div>
 

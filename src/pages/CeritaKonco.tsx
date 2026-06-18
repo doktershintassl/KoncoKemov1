@@ -69,7 +69,7 @@ export function CeritaKoncoList() {
           transition={{ delay: 0.1 }}
           className="text-[0.9375rem] sm:text-[1rem] md:text-[1.125rem] text-gray-600 leading-relaxed"
         >
-          Kumpulan kisah inspiratif, perjalanan pengobatan, dan harapan dari para penyintas yang akan menguatkan langkah Anda.
+          Kumpulan cerita inspiratif, perjalanan pengobatan, dan harapan dari pejuang kanker
         </motion.p>
       </div>
 
