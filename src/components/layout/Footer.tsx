@@ -68,7 +68,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="font-medium hover:text-primary-600 transition-colors"
                 >
-                  Layanan Onkologi di RSUD dr. Saiful Anwar (RSSA) Malang berlokasi di Lantai 2 Gedung RSSA, Jl. Jaksa Agung Suprapto No. 2, Malang
+                  Layanan Onkologi, Lantai 2 Gedung RSUD dr. Saiful Anwar (RSSA) Malang, Jl. Jaksa Agung Suprapto No. 2, Malang
                 </a>
               </li>
               {/* Social icons hidden as requested until accounts are ready */}
@@ -129,7 +129,7 @@ export function Footer() {
             />
           </a>
 
-          <Link to="/login" className="text-gray-400 hover:text-primary-600 text-[0.75rem] md:text-[0.8125rem] transition-colors uppercase tracking-widest font-bold">
+          <Link to="/login" className="hidden text-gray-400 hover:text-primary-600 text-[0.75rem] md:text-[0.8125rem] transition-colors uppercase tracking-widest font-bold">
             Admin Panel
           </Link>
         </div>
