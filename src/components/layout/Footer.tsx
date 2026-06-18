@@ -114,8 +114,8 @@ export function Footer() {
       </div>
 
       <div className="bg-gray-50 border-t border-gray-100 py-[1.5rem] md:py-[2rem]">
-        <div className="container mx-auto px-[1rem] sm:px-[1.5rem] lg:px-[3rem] flex flex-col items-center justify-center gap-[1rem] text-center">
-          <p className="text-gray-500 text-[0.875rem] md:text-[1rem] leading-tight font-medium">
+        <div className="container mx-auto px-[1rem] sm:px-[1.5rem] lg:px-[3rem] flex flex-col leading-none items-center justify-center gap-[1rem] text-center">
+          <p className="text-gray-500 text-[0.875rem] md:text-[1rem] leading-none font-medium">
             &copy; 2026 KoncoKemo
           </p>
           
