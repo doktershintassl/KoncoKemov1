@@ -63,6 +63,6 @@ export const siteConfig = {
     }
   ],
   footer: {
-    description: "KoncoKemo adalah Pusat Pemberdayaan, Edukasi dan Komunitas Pasien Kanker."
+    description: "Platform Edukasi, Pemberdayaan dan Komunitas Pasien Kanker."
   }
 };
