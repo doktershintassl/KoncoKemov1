@@ -221,19 +221,19 @@ const FounderPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-[1.5rem] md:gap-8">
             {[
               {
-                name: "Rumah Sakit Universitas Brawijaya (RSUB)",
-                addr: "Jl. Soekarno Hatta, Kota Malang",
+                name: "RSUD Dr. Saiful Anwar",
+                addr: "Jl. Jaksa Agung Suprapto No.2, Klojen, Kec. Klojen, Kota Malang, Jawa Timur 65112",
                 serv: "Onkologi Terpadu",
-                lat: -7.9405,
-                lng: 112.6175,
+                lat: -7.972091158774396,
+                lng: 112.63147447301432,
                 color: "bg-blue-600"
               },
               {
                 name: "RSIA Galeri Candra",
-                addr: "Jl. Bunga Andong No.3, Kota Malang",
+                addr: "Jl. Bunga Andong No.3, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141",
                 serv: "Hematologi Reaktif",
-                lat: -7.9465,
-                lng: 112.6185,
+                lat: -7.94768997336689,
+                lng: 112.61948816347042,
                 color: "bg-primary-600"
               }
             ].map((loc, idx) => (
