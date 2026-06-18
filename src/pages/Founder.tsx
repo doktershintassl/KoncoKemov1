@@ -200,7 +200,7 @@ const FounderPage = () => {
       <section className="py-[2rem] lg:py-[3rem] text-center max-w-4xl mx-auto px-[1rem] sm:px-6">
         <Quote className="w-[2rem] md:w-12 h-[2rem] md:h-12 mx-auto text-primary-500 mb-[1rem] md:mb-6 opacity-20" />
         <h3 className="text-[1.25rem] sm:text-[1.75rem] md:text-[2.5rem] font-display font-medium text-gray-900 leading-[1.3] italic">
-          "Dedikasi saya adalah memastikan setiap pasien mendapatkan keadilan informasi dan kualitas perawatan yang bermartabat."
+          "Dedikasi saya untuk memastikan setiap pejuang kanker mendapatkan informasi yang akurat, kualitas perawatan yang bermartabat, dan mempunyai harapan serta semangat untuk lebih berdaya."
         </h3>
         <div className="mt-[1rem] md:mt-6 flex flex-col items-center gap-3 md:gap-4">
            <div className="w-px h-8 md:h-10 bg-primary-100" />
