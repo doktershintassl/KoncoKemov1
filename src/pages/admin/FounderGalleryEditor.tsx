@@ -93,9 +93,9 @@ export default function FounderGalleryEditor() {
         <div className="flex flex-col gap-4">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider pl-2">Live Preview</h3>
           
-          <div className="relative rounded-3xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 w-full aspect-[3/2] flex items-center justify-center p-2">
+          <div className="relative rounded-3xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 w-full aspect-[3/2] flex items-center justify-center">
             {formData.image_url ? (
-              <img src={formData.image_url} alt="Preview Foto" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
+              <img src={formData.image_url} alt="Preview Foto" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             ) : (
               <div className="flex flex-col items-center justify-center text-gray-400">
                 <ImageIcon className="w-12 h-12 mb-2 opacity-50" />

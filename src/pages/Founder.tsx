@@ -186,11 +186,11 @@ const FounderPage = () => {
                 <div 
                   key={i} 
                   onClick={() => setActiveImageIndex(realIndex)}
-                  className="relative w-[15rem] md:w-[22rem] h-[10rem] md:h-[15rem] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shrink-0 border border-gray-100 group shadow-lg shadow-gray-200/40 bg-gray-50 cursor-pointer"
+                  className="relative w-[15rem] md:w-[22.5rem] h-[10rem] md:h-[15rem] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shrink-0 border border-gray-100 group shadow-lg shadow-gray-200/40 bg-white cursor-pointer"
                 >
                   <img 
                     src={img.image_url} 
-                    className="w-full h-full object-contain p-1 transition-all duration-700 group-hover:scale-105" 
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
                     alt="Founder Activity" 
                     referrerPolicy="no-referrer"
                   />

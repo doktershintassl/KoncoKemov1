@@ -161,7 +161,7 @@ export function EdukasiDetail() {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="w-full aspect-[16/9] bg-gray-100 rounded-[1.25rem] sm:rounded-[2rem] overflow-hidden mb-[2rem] md:mb-[4rem] shadow-2xl shadow-primary-900/5 border border-gray-100 group relative"
+          className="w-full md:w-[80%] lg:w-[75%] mx-auto aspect-[16/9] bg-gray-100 rounded-[1.25rem] sm:rounded-[2rem] overflow-hidden mb-[2rem] md:mb-[4rem] shadow-2xl shadow-primary-900/5 border border-gray-100 group relative"
         >
 
           {isVideo && embedUrl ? (

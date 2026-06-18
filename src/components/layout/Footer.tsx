@@ -122,7 +122,7 @@ export function Footer() {
           </p>
           
           <a href="https://maindi.id" target="_blank" rel="noopener noreferrer" className="flex items-center gap-[0.5rem] text-gray-500 text-[0.8125rem] md:text-[0.875rem] hover:text-primary-600 transition-colors">
-            Dikembangkan oleh Maindi.id
+            Developed and managed by Maindi.id
             <img 
               src={ASSETS.LOGO_MAINDI} 
               alt="Logo Maindi" 
