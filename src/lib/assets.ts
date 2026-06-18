@@ -1,6 +1,6 @@
 export const ASSETS = {
   // Logo utama aplikasi
-  LOGO_KONCOKEMO: "/icon.png",
+  LOGO_KONCOKEMO: "https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44",
   
   // Logo pengembang (Direkomendasikan diubah menjadi format SVG)
   LOGO_MAINDI: "https://lh3.googleusercontent.com/d/1_1Pc0LwaSwZdM_aPyEAaXB5P3q7JR5vt",
