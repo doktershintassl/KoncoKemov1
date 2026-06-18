@@ -16,6 +16,7 @@ export default function FounderGalleryEditor() {
 
   const [formData, setFormData] = useState<Omit<FounderGalleryImage, 'id'>>({
     image_url: "",
+    description: "",
     order_index: 0
   });
 
@@ -29,6 +30,7 @@ export default function FounderGalleryEditor() {
           if (existingImg) {
             setFormData({
               image_url: existingImg.image_url,
+              description: existingImg.description || "",
               order_index: existingImg.order_index || 0
             });
           } else {
@@ -91,9 +93,9 @@ export default function FounderGalleryEditor() {
         <div className="flex flex-col gap-4">
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider pl-2">Live Preview</h3>
           
-          <div className="relative rounded-3xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 w-full aspect-video flex items-center justify-center">
+          <div className="relative rounded-3xl overflow-hidden border border-gray-200 shadow-sm bg-gray-100 w-full aspect-[3/2] flex items-center justify-center p-2">
             {formData.image_url ? (
-              <img src={formData.image_url} alt="Preview Foto" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              <img src={formData.image_url} alt="Preview Foto" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
             ) : (
               <div className="flex flex-col items-center justify-center text-gray-400">
                 <ImageIcon className="w-12 h-12 mb-2 opacity-50" />
@@ -125,13 +127,21 @@ export default function FounderGalleryEditor() {
                   }
                 }}
               />
+
+              <label className="text-sm font-medium text-gray-700 mt-2">Deskripsi Gambar (Opsional)</label>
+              <textarea
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white transition-colors focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:outline-none min-h-[100px]"
+                placeholder="Tambahkan deskripsi atau caption untuk gambar ini..."
+                value={formData.description || ''}
+                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              />
               
               <div className="bg-primary-50/50 border border-primary-100 rounded-2xl p-5 flex gap-4 text-sm text-primary-800">
                 <Info className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
                 <div className="space-y-2">
                   <p className="font-bold text-primary-900">Optimal Ukuran Gambar</p>
                   <p className="text-primary-700/80 leading-relaxed">
-                    Lebih baik menggunakan rasio 3:2 atau 4:3. Sistem akan secara otomatis memotong dengan memposisikan titik tengah gambar (object-cover).
+                    Lebih baik menggunakan rasio 3:2 atau 4:3. Gambar akan ditampilkan proporsional tanpa terpotong (object-contain).
                   </p>
                 </div>
               </div>

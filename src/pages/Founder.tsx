@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import Typewriter from "typewriter-effect";
-import { GraduationCap, Microscope, Stethoscope, MapPin, Quote } from "lucide-react";
+import { GraduationCap, Microscope, Stethoscope, MapPin, Quote, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence } from "motion/react";
 import { SEO } from "../components/SEO";
 import { getFounderGallery, FounderGalleryImage } from "../lib/founderGallery";
 
 const FounderPage = () => {
   const photoUrl = "https://lh3.googleusercontent.com/d/1LUh5PRm082eRYlCJhXTiPC6O4Q-vvR7X";
   const [galleryImages, setGalleryImages] = useState<FounderGalleryImage[]>([]);
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -176,22 +178,26 @@ const FounderPage = () => {
               repeat: Infinity, 
               ease: "linear" 
             }}
-            className="flex gap-[0.75rem] md:gap-4 px-2"
+            className="flex gap-[0.75rem] md:gap-4 px-2 hover:[animation-play-state:paused]"
           >
-            {[...galleryImages, ...galleryImages, ...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => (
-              <div 
-                key={i} 
-                className="relative w-[15rem] md:w-[22rem] h-[10rem] md:h-[15rem] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shrink-0 border border-gray-100 group shadow-lg shadow-gray-200/40"
-              >
-                <img 
-                  src={img.image_url} 
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
-                  alt="Founder Activity" 
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-primary-900/0 group-hover:bg-primary-900/5 transition-all duration-500" />
-              </div>
-            ))}
+            {[...galleryImages, ...galleryImages, ...galleryImages, ...galleryImages, ...galleryImages].map((img, i) => {
+              const realIndex = i % galleryImages.length;
+              return (
+                <div 
+                  key={i} 
+                  onClick={() => setActiveImageIndex(realIndex)}
+                  className="relative w-[15rem] md:w-[22rem] h-[10rem] md:h-[15rem] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shrink-0 border border-gray-100 group shadow-lg shadow-gray-200/40 bg-gray-50 cursor-pointer"
+                >
+                  <img 
+                    src={img.image_url} 
+                    className="w-full h-full object-contain p-1 transition-all duration-700 group-hover:scale-105" 
+                    alt="Founder Activity" 
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-primary-900/0 group-hover:bg-primary-900/5 transition-all duration-500" />
+                </div>
+              )
+            })}
           </motion.div>
         </div>
       </section>
@@ -289,6 +295,73 @@ const FounderPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Lightbox Zoom Modal */}
+      <AnimatePresence>
+        {activeImageIndex !== null && galleryImages.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-8"
+            onClick={() => setActiveImageIndex(null)}
+          >
+            <button 
+              className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white transition-colors z-[110]"
+              onClick={() => setActiveImageIndex(null)}
+            >
+              <X className="w-8 h-8 md:w-10 md:h-10" />
+            </button>
+
+            <button 
+              className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors p-2 z-[110]"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveImageIndex((prev) => (prev! === 0 ? galleryImages.length - 1 : prev! - 1));
+              }}
+            >
+              <ChevronLeft className="w-10 h-10 md:w-14 md:h-14" />
+            </button>
+
+            <div 
+              className="max-w-6xl w-full flex flex-col items-center justify-center space-y-4 md:space-y-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.img 
+                key={activeImageIndex}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                src={galleryImages[activeImageIndex].image_url} 
+                className="w-full max-h-[75vh] object-contain rounded-[1.5rem] shadow-2xl" 
+                alt="Founder Zoom" 
+                referrerPolicy="no-referrer"
+              />
+              {galleryImages[activeImageIndex].description && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-white/90 text-center text-[0.875rem] md:text-[1.125rem] font-medium leading-relaxed max-w-3xl px-4"
+                >
+                  {galleryImages[activeImageIndex].description}
+                </motion.div>
+              )}
+            </div>
+
+            <button 
+              className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors p-2 z-[110]"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveImageIndex((prev) => (prev! === galleryImages.length - 1 ? 0 : prev! + 1));
+              }}
+            >
+              <ChevronRight className="w-10 h-10 md:w-14 md:h-14" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

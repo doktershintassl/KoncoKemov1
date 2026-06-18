@@ -3,6 +3,7 @@ import { supabase } from './supabase';
 export interface FounderGalleryImage {
   id: string;
   image_url: string;
+  description?: string;
   order_index?: number;
 }
 
@@ -22,6 +23,7 @@ export async function getFounderGallery(): Promise<FounderGalleryImage[]> {
     return data.map(item => ({
       id: item.id,
       image_url: item.image_url,
+      description: item.description,
       order_index: item.order_index
     }));
   }
@@ -35,6 +37,7 @@ export async function saveFounderGalleryImage(image: Omit<FounderGalleryImage, '
       .from('founder_gallery')
       .update({
         image_url: image.image_url,
+        description: image.description,
         order_index: image.order_index || 0
       })
       .eq('id', id);
@@ -45,6 +48,7 @@ export async function saveFounderGalleryImage(image: Omit<FounderGalleryImage, '
       .from('founder_gallery')
       .insert([{
         image_url: image.image_url,
+        description: image.description,
         order_index: image.order_index || 0
       }]);
 
