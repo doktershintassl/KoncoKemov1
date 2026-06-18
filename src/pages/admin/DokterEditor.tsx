@@ -1,22 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Save, Loader2, Info, Plus, Trash2, Phone, Hospital, User, MapPin, ImageIcon } from "lucide-react";
-import CreatableSelect from 'react-select/creatable';
+import { CustomValueDropdown } from "../../components/ui/CustomValueDropdown";
 import { Button } from "../../components/ui/Button";
 import { getDokterById, saveDokter, getDokterFormMetadata, Dokter, DokterContact, DokterPractice, PracticeMetadata } from "../../lib/dokter";
 import { convertToLh3Url } from "../../lib/gdriveUtils";
-
-const customSelectStyles = {
-  control: (base: any, state: any) => ({
-    ...base,
-    minHeight: '48px', // Equivalent to py-3
-    borderRadius: '0.75rem', // rounded-xl
-    border: state.isFocused ? '1px solid #a855f7' : '1px solid #e5e7eb',
-    boxShadow: state.isFocused ? '0 0 0 2px rgba(168, 85, 247, 0.1)' : 'none',
-    backgroundColor: 'rgba(249, 250, 251, 0.5)',
-    transition: 'all 0.2s',
-  })
-};
 
 const DokterEditor = () => {
   const { id } = useParams();
@@ -186,38 +174,29 @@ const DokterEditor = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700">Spesialisasi</label>
-                  <CreatableSelect
-                    isClearable
-                    options={metadata.specializations.map(s => ({ value: s, label: s }))}
-                    value={formData.specialization ? { value: formData.specialization, label: formData.specialization } : null}
-                    onChange={(val) => setFormData({...formData, specialization: val?.value || ""})}
+                  <CustomValueDropdown
+                    value={formData.specialization}
+                    onChange={(val) => setFormData({...formData, specialization: val})}
+                    options={metadata.specializations}
                     placeholder="Pilih atau ketik baru..."
-                    styles={customSelectStyles}
-                    className="text-sm font-medium"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700">Kota</label>
-                  <CreatableSelect
-                    isClearable
-                    options={metadata.cities.map(c => ({ value: c, label: c }))}
-                    value={formData.kota ? { value: formData.kota, label: formData.kota } : null}
-                    onChange={(val) => setFormData({...formData, kota: val?.value || ""})}
+                  <CustomValueDropdown
+                    value={formData.kota}
+                    onChange={(val) => setFormData({...formData, kota: val})}
+                    options={metadata.cities}
                     placeholder="Pilih atau ketik baru..."
-                    styles={customSelectStyles}
-                    className="text-sm font-medium"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700">Provinsi</label>
-                  <CreatableSelect
-                    isClearable
-                    options={metadata.provinces.map(p => ({ value: p, label: p }))}
-                    value={formData.provinsi ? { value: formData.provinsi, label: formData.provinsi } : null}
-                    onChange={(val) => setFormData({...formData, provinsi: val?.value || ""})}
+                  <CustomValueDropdown
+                    value={formData.provinsi}
+                    onChange={(val) => setFormData({...formData, provinsi: val})}
+                    options={metadata.provinces}
                     placeholder="Pilih atau ketik baru..."
-                    styles={customSelectStyles}
-                    className="text-sm font-medium"
                   />
                 </div>
               </div>
@@ -259,12 +238,10 @@ const DokterEditor = () => {
                   <div className="grid grid-cols-1 gap-5">
                     <div className="space-y-2">
                       <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest px-1">Nama Rumah Sakit / Klinik</label>
-                      <CreatableSelect
-                        isClearable
-                        options={Object.keys(metadata.practices).map(w => ({ value: w, label: w }))}
-                        value={practice.workplace ? { value: practice.workplace, label: practice.workplace } : null}
+                      <CustomValueDropdown
+                        value={practice.workplace}
                         onChange={(val) => {
-                          const newWorkplace = val?.value || "";
+                          const newWorkplace = val;
                           if (metadata.practices[newWorkplace]) {
                             const pData = metadata.practices[newWorkplace];
                             const newPractices = [...formData.practices];
@@ -279,15 +256,8 @@ const DokterEditor = () => {
                             handlePracticeChange(pIdx, 'workplace', newWorkplace);
                           }
                         }}
+                        options={Object.keys(metadata.practices)}
                         placeholder="Pilih dari database atau ketik nama baru..."
-                        styles={{
-                            ...customSelectStyles,
-                            control: (base: any, state: any) => ({
-                                ...customSelectStyles.control(base, state),
-                                minHeight: '44px',
-                            })
-                        }}
-                        className="text-sm font-medium"
                       />
                     </div>
                     <div className="space-y-2">

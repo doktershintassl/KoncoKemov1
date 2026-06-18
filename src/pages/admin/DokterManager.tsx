@@ -12,13 +12,18 @@ export default function DokterManager() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [totalData, setTotalData] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedSearch(searchQuery), 1500);
+    if (searchQuery !== debouncedSearch) setIsSearching(true);
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setIsSearching(false);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
@@ -152,7 +157,11 @@ export default function DokterManager() {
       <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-gray-50 bg-gray-50/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="relative w-full md:w-96">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            {isSearching ? (
+              <Loader2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-500 animate-spin" />
+            ) : (
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            )}
             <input 
               type="text" 
               placeholder="Cari dokter atau spesialisasi..."

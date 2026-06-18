@@ -5,6 +5,7 @@ import QRCode from "qrcode";
 import { AnimatePresence, motion } from "motion/react";
 import { Download, ExternalLink, X, FileText, Smartphone } from "lucide-react";
 import { SEO } from "../components/SEO";
+import { ASSETS } from "../lib/assets";
 
 export function CekMandiriPage() {
   return (
@@ -60,7 +61,7 @@ function CekMandiri() {
   useEffect(() => {
     const fetchLogo = async () => {
       try {
-        const response = await fetch("https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44");
+        const response = await fetch(ASSETS.LOGO_KONCOKEMO);
         if (response.ok) {
           const blob = await response.blob();
           const encoded = await new Promise<string>((resolve, reject) => {

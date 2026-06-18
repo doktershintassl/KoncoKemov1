@@ -5,6 +5,7 @@ import { Button } from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { ASSETS } from "../../lib/assets";
 
 export function AdminLogin() {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ export function AdminLogin() {
       >
         <div className="text-center mb-8">
           <img 
-            src="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" 
+            src={ASSETS.LOGO_KONCOKEMO} 
             alt="KoncoKemo" 
             className="w-16 h-16 object-contain mx-auto mb-4" 
           />

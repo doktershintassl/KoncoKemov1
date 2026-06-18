@@ -19,6 +19,7 @@ export function EdukasiManager() {
   
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   
@@ -29,7 +30,11 @@ export function EdukasiManager() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedSearch(searchQuery), 1000);
+    if (searchQuery !== debouncedSearch) setIsSearching(true);
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setIsSearching(false);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
@@ -151,7 +156,11 @@ export function EdukasiManager() {
         <div className="p-6 border-b border-gray-50 bg-gray-50/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex flex-col md:flex-row gap-4 w-full">
             <div className="relative w-full md:w-96 shrink-0">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              {isSearching ? (
+                <Loader2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-500 animate-spin" />
+              ) : (
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              )}
               <input 
                 type="text" 
                 placeholder="Cari materi edukasi..."

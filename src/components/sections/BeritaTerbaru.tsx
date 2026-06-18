@@ -29,7 +29,9 @@ export function BeritaTerbaru() {
     fetchArticles();
   }, []);
 
-  if (loading && articles.length === 0) return null;
+  if (loading && articles.length === 0) {
+    return <section className="py-[3.5rem] md:py-24 bg-gray-50 min-h-[500px] animate-pulse" />;
+  }
 
   return (
     <section id="edukasi" className="py-[3.5rem] md:py-24 bg-gray-50">

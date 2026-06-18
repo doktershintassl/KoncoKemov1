@@ -2,13 +2,14 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Save, Loader2, Info, X, ImageIcon, Link as LinkIcon, Youtube, FileText, PlayCircle, Plus } from "lucide-react";
 import { Button } from "../../components/ui/Button";
-import { getEdukasiById, saveEdukasi, Edukasi } from "../../lib/edukasi";
+import { getEdukasiById, saveEdukasi, Edukasi, getTopics, getKontributors } from "../../lib/edukasi";
 import { convertToLh3Url } from "../../lib/gdriveUtils";
 import { isYoutubeUrl, getYoutubeThumbnail } from "../../lib/videoUtils";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { marked } from "marked";
 import TurndownService from "turndown";
+import { CustomValueDropdown } from "../../components/ui/CustomValueDropdown";
 
 const TITLE_MAX_LENGTH = 120;
 const SUBTITLE_MAX_LENGTH = 250;
@@ -42,6 +43,8 @@ export function EdukasiEditor() {
 
   const [contributors, setContributors] = useState<string[]>([]);
   const [newContributor, setNewContributor] = useState("");
+  const [availableTopics, setAvailableTopics] = useState<string[]>([]);
+  const [availableContributors, setAvailableContributors] = useState<string[]>([]);
 
   // Quill Editor state
   const quillRef = useRef<ReactQuill>(null);
@@ -62,6 +65,22 @@ export function EdukasiEditor() {
     // Preserve alignment and size if possible via HTML
     service.keep(['img', 'div', 'p']);
     return service;
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [fetchedTopics, fetchedContributors] = await Promise.all([
+          getTopics(),
+          getKontributors()
+        ]);
+        setAvailableTopics(fetchedTopics);
+        setAvailableContributors(fetchedContributors);
+      } catch (err) {
+        console.error("Failed to fetch available topics and contributors:", err);
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -150,11 +169,15 @@ export function EdukasiEditor() {
     }));
   };
 
-  const addContributor = () => {
-    if (newContributor.trim() !== "" && !contributors.includes(newContributor.trim())) {
-      setContributors([...contributors, newContributor.trim()]);
-      setNewContributor("");
+  const processAddContributor = (name: string) => {
+    if (name.trim() !== "" && !contributors.includes(name.trim())) {
+      setContributors(prev => [...prev, name.trim()]);
     }
+    setNewContributor("");
+  };
+
+  const addContributor = () => {
+    processAddContributor(newContributor);
   };
 
   const removeContributor = (index: number) => {
@@ -277,12 +300,11 @@ export function EdukasiEditor() {
 
           <div className="space-y-[0.5rem] col-span-1 border-t border-gray-50 pt-[1.5rem] md:pt-[0] md:border-none">
             <label className="text-[0.875rem] font-medium text-gray-700">Topic / Tema</label>
-            <input
-              type="text"
-              className="w-full px-[1rem] py-[0.75rem] rounded-[0.75rem] border border-gray-200 bg-gray-50/50 focus:bg-white transition-colors focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:outline-none"
-              placeholder="Contoh: Nutrisi, Motivasi, Info Medis"
+            <CustomValueDropdown
               value={formData.topic || ""}
-              onChange={(e) => setFormData(prev => ({ ...prev, topic: e.target.value }))}
+              onChange={(val) => setFormData(prev => ({ ...prev, topic: val }))}
+              options={availableTopics}
+              placeholder="Contoh: Nutrisi, Motivasi, Info Medis"
             />
           </div>
 
@@ -299,15 +321,24 @@ export function EdukasiEditor() {
 
           <div className="space-y-[0.5rem] col-span-1 md:col-span-2 pb-[1rem]">
             <label className="text-[0.875rem] font-medium text-gray-700">Kontributor / Penulis</label>
-             <div className="flex gap-[0.5rem]">
-               <input
-                 type="text"
-                 className="flex-1 px-[1rem] py-[0.75rem] rounded-[0.75rem] border border-gray-200 bg-gray-50/50 focus:bg-white transition-colors focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:outline-none text-[0.875rem]"
-                 placeholder="Nama penulis..."
-                 value={newContributor}
-                 onChange={e => setNewContributor(e.target.value)}
-                 onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addContributor(); } }}
-               />
+             <div className="flex gap-[0.5rem] w-full">
+               <div className="flex-1">
+                 <CustomValueDropdown
+                   value={newContributor}
+                   onChange={setNewContributor}
+                   options={availableContributors.filter(c => !contributors.includes(c))}
+                   placeholder="Nama penulis..."
+                   onSelectOption={(val) => {
+                     processAddContributor(val);
+                   }}
+                   onKeyDown={(e) => {
+                     if (e.key === 'Enter') {
+                       e.preventDefault();
+                       addContributor();
+                     }
+                   }}
+                 />
+               </div>
                <button type="button" onClick={addContributor} className="px-[1.5rem] bg-gray-100 font-bold hover:bg-gray-200 rounded-[0.75rem] text-gray-700 flex items-center justify-center transition-colors">
                  <Plus className="w-[1.25rem] h-[1.25rem]" />
                </button>

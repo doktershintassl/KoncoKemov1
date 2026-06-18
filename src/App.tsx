@@ -40,10 +40,11 @@ const EdukasiDetail = lazy(() => import("./pages/EdukasiDetail").then(m => ({ de
 
 const EdukasiManager = lazy(() => import("./pages/admin/EdukasiManager").then(m => ({ default: m.EdukasiManager })));
 const EdukasiEditor = lazy(() => import("./pages/admin/EdukasiEditor").then(m => ({ default: m.EdukasiEditor })));
-const DokterKemo = lazy(() => import("./pages/DokterKemo").then(m => ({ default: m.DokterKemo })));
-const DokterManager = lazy(() => import("./pages/admin/DokterManager").then(m => ({ default: m.default })));
-const DokterEditor = lazy(() => import("./pages/admin/DokterEditor").then(m => ({ default: m.default })));
+const KoncoDokter = lazy(() => import("./pages/KoncoDokter").then(m => ({ default: m.KoncoDokter })));
+const KoncoDokterManager = lazy(() => import("./pages/admin/DokterManager").then(m => ({ default: m.default })));
+const KoncoDokterEditor = lazy(() => import("./pages/admin/DokterEditor").then(m => ({ default: m.default })));
 const Founder = lazy(() => import("./pages/Founder").then(m => ({ default: m.default })));
+const SoonPage = lazy(() => import("./pages/SoonPage").then(m => ({ default: m.SoonPage })));
 const FounderGalleryManager = lazy(() => import("./pages/admin/FounderGalleryManager").then(m => ({ default: m.default })));
 const FounderGalleryEditor = lazy(() => import("./pages/admin/FounderGalleryEditor").then(m => ({ default: m.default })));
 
@@ -73,49 +74,52 @@ export default function App() {
       <AnimatePresence>
         {showSplash && <SplashScreen />}
       </AnimatePresence>
-      <GreetingWidget />
-      <Suspense fallback={<SuspenseFallback />}>
-        <Routes>
-          {/* Jalur Publik dengan Layout Utama */}
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<PublicLayout />} />
-            <Route path="/cek-mandiri" element={<CekMandiriPage />} />
-            <Route path="/cerita-konco" element={<CeritaKoncoList />} />
-            <Route path="/cerita-konco/:id" element={<CeritaKoncoDetail />} />
-            <Route path="/edukasi" element={<EdukasiList />} />
-            <Route path="/edukasi/:id" element={<EdukasiDetail />} />
-            <Route path="/dokter-kemo" element={<DokterKemo />} />
-            <Route path="/founder" element={<Founder />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
+      {!showSplash && <GreetingWidget />}
+      {!showSplash && (
+        <Suspense fallback={<SuspenseFallback />}>
+          <Routes>
+            {/* Jalur Publik dengan Layout Utama */}
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<PublicLayout />} />
+              <Route path="/cek-mandiri" element={<CekMandiriPage />} />
+              <Route path="/cerita-konco" element={<CeritaKoncoList />} />
+              <Route path="/cerita-konco/:id" element={<CeritaKoncoDetail />} />
+              <Route path="/edukasi" element={<EdukasiList />} />
+              <Route path="/edukasi/:id" element={<EdukasiDetail />} />
+              <Route path="/dokter-kemo" element={<KoncoDokter />} />
+              <Route path="/soon/:type" element={<SoonPage />} />
+              <Route path="/founder" element={<Founder />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
 
-          {/* Jalur Autentikasi Admin */}
-          <Route path="/login" element={<AdminLogin />} />
+            {/* Jalur Autentikasi Admin */}
+            <Route path="/login" element={<AdminLogin />} />
 
-          {/* TataLaksana Route */}
-          <Route path="/tatalaksana" element={<TataLaksana />} />
+            {/* TataLaksana Route */}
+            <Route path="/tatalaksana" element={<TataLaksana />} />
 
-          {/* Jalur Khusus Admin Panel (Lazy Loaded) */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Navigate to="hero-slides" replace />} />
-            <Route path="hero-slides" element={<HeroSlidesManager />} />
-            <Route path="hero-slides/new" element={<HeroSlideEditor />} />
-            <Route path="hero-slides/:id" element={<HeroSlideEditor />} />
-            <Route path="cerita-konco" element={<CeritaKoncoManager />} />
-            <Route path="cerita-konco/new" element={<CeritaKoncoEditor />} />
-            <Route path="cerita-konco/:id" element={<CeritaKoncoEditor />} />
-            <Route path="edukasi" element={<EdukasiManager />} />
-            <Route path="edukasi/new" element={<EdukasiEditor />} />
-            <Route path="edukasi/:id" element={<EdukasiEditor />} />
-            <Route path="dokter" element={<DokterManager />} />
-            <Route path="dokter/new" element={<DokterEditor />} />
-            <Route path="dokter/:id" element={<DokterEditor />} />
-            <Route path="founder-gallery" element={<FounderGalleryManager />} />
-            <Route path="founder-gallery/new" element={<FounderGalleryEditor />} />
-            <Route path="founder-gallery/:id" element={<FounderGalleryEditor />} />
-          </Route>
-        </Routes>
-      </Suspense>
+            {/* Jalur Khusus Admin Panel (Lazy Loaded) */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Navigate to="hero-slides" replace />} />
+              <Route path="hero-slides" element={<HeroSlidesManager />} />
+              <Route path="hero-slides/new" element={<HeroSlideEditor />} />
+              <Route path="hero-slides/:id" element={<HeroSlideEditor />} />
+              <Route path="cerita-konco" element={<CeritaKoncoManager />} />
+              <Route path="cerita-konco/new" element={<CeritaKoncoEditor />} />
+              <Route path="cerita-konco/:id" element={<CeritaKoncoEditor />} />
+              <Route path="edukasi" element={<EdukasiManager />} />
+              <Route path="edukasi/new" element={<EdukasiEditor />} />
+              <Route path="edukasi/:id" element={<EdukasiEditor />} />
+              <Route path="dokter" element={<KoncoDokterManager />} />
+              <Route path="dokter/new" element={<KoncoDokterEditor />} />
+              <Route path="dokter/:id" element={<KoncoDokterEditor />} />
+              <Route path="founder-gallery" element={<FounderGalleryManager />} />
+              <Route path="founder-gallery/new" element={<FounderGalleryEditor />} />
+              <Route path="founder-gallery/:id" element={<FounderGalleryEditor />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      )}
     </Router>
   );
 }

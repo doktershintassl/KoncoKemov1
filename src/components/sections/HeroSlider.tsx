@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "../ui/Button";
@@ -8,6 +8,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const isFirstLoad = useRef(true);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -54,16 +55,30 @@ export function HeroSlider() {
   useEffect(() => {
     if (slides.length <= 1) return;
     
-    const timer = setInterval(() => {
+    const delay = isFirstLoad.current ? 10000 : 5000;
+    isFirstLoad.current = false;
+
+    const timer = setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    }, delay);
+    return () => clearTimeout(timer);
   }, [slides.length, currentSlide]);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  const nextSlide = () => {
+    isFirstLoad.current = false;
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }
+  const prevSlide = () => {
+    isFirstLoad.current = false;
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  }
 
-  if (slides.length === 0) return null;
+  if (slides.length === 0) {
+    return (
+      <section className="relative w-full min-h-[500px] md:min-h-0 md:aspect-[24/10] overflow-hidden bg-gray-50 flex items-center justify-center animate-pulse">
+      </section>
+    );
+  }
 
   return (
     <section className="relative w-full min-h-[500px] md:min-h-0 md:aspect-[24/10] overflow-hidden bg-gray-50 flex items-center justify-center">
@@ -83,6 +98,8 @@ export function HeroSlider() {
           <img
             src={slides[currentSlide].image}
             alt="Hero background"
+            loading={currentSlide === 0 ? "eager" : "lazy"}
+            fetchPriority={currentSlide === 0 ? "high" : "auto"}
             className="w-full h-full object-cover object-[80%_center] md:object-center"
           />
 
@@ -120,16 +137,21 @@ export function HeroSlider() {
       </AnimatePresence>
 
       <div className="absolute bottom-10 right-10 z-30 flex items-center gap-4">
-        <div className="flex gap-2 mr-6">
+        <div className="flex gap-2 mr-6 items-center">
           {slides.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentSlide(idx)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                idx === currentSlide ? "w-8 bg-primary-600" : "w-2 bg-gray-300 hover:bg-gray-400"
-              }`}
+              className="relative outline-none"
               aria-label={`Go to slide ${idx + 1}`}
-            />
+            >
+              <span className="absolute -inset-4 z-10" />
+              <div
+                className={`h-2 rounded-full transition-all duration-300 relative z-0 ${
+                  idx === currentSlide ? "w-8 bg-primary-600" : "w-2 bg-gray-300 group-hover:bg-gray-400"
+                }`}
+              />
+            </button>
           ))}
         </div>
         <button

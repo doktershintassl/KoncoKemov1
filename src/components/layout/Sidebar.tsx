@@ -3,6 +3,7 @@ import { siteConfig } from "../../config/site";
 import { X } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { ASSETS } from "../../lib/assets";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -51,7 +52,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
               <div className="flex items-center gap-3">
                 <img
-                  src="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44"
+                  src={ASSETS.LOGO_KONCOKEMO}
                   alt="KoncoKemo Logo"
                   className="w-8 h-8 object-contain"
                 />

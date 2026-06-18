@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, Loader2, BookOpen, Pin } from "lucide-react";
 import { getEdukasis, getTopics, Edukasi } from "../lib/edukasi";
 import { getYoutubeThumbnail, isYoutubeUrl } from "../lib/videoUtils";
+import { SearchableSelect } from "../components/ui/SearchableSelect";
 import { SEO } from "../components/SEO";
 
 export function EdukasiList() {
@@ -99,25 +100,25 @@ export function EdukasiList() {
           transition={{ delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-[1rem] min-w-[280px]"
         >
-          <select 
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            className="w-full sm:w-auto px-[1.25rem] py-[0.75rem] bg-white border border-gray-200 rounded-[1rem] text-[0.875rem] font-bold text-gray-700 outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all cursor-pointer shadow-sm appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM5Q0EzQUYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[position:right_1rem_center] bg-[length:1.25rem] pr-[3rem]"
-          >
-            <option value="Semua">Semua Format</option>
-            <option value="Artikel">Artikel</option>
-            <option value="Video">Video</option>
-          </select>
+          <div className="w-full sm:w-[12rem] bg-white rounded-[1rem]">
+            <SearchableSelect
+              value={selectedType}
+              onChange={setSelectedType}
+              options={["Semua", "Artikel", "Video"]}
+              placeholder="Semua Format"
+              searchPlaceholder="Cari format..."
+            />
+          </div>
 
-          <select 
-            value={selectedTopic}
-            onChange={(e) => setSelectedTopic(e.target.value)}
-            className="w-full sm:w-auto px-[1.25rem] py-[0.75rem] bg-white border border-gray-200 rounded-[1rem] text-[0.875rem] font-bold text-gray-700 outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all cursor-pointer shadow-sm appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM5Q0EzQUYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[position:right_1rem_center] bg-[length:1.25rem] pr-[3rem]"
-          >
-            {topics.map(t => (
-              <option key={t} value={t}>{t}</option>
-            ))}
-          </select>
+          <div className="w-full sm:w-[14rem] bg-white rounded-[1rem]">
+            <SearchableSelect
+              value={selectedTopic}
+              onChange={setSelectedTopic}
+              options={topics}
+              placeholder="Semua Topik"
+              searchPlaceholder="Cari topik..."
+            />
+          </div>
         </motion.div>
       </div>
 
@@ -146,58 +147,73 @@ export function EdukasiList() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ delay: (index % 12) * 0.05 }}
-                    className="group flex flex-col bg-white rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem] border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative"
+                    className="group relative p-[1px] md:p-[2px] shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem]"
                   >
-                    {item.is_pinned && (
-                      <div className="absolute top-[1rem] right-[1rem] z-10 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white w-[2.25rem] h-[2.25rem] rounded-full flex items-center justify-center shadow-lg shadow-yellow-500/30 ring-4 ring-white">
-                        <Pin className="w-[1.125rem] h-[1.125rem] fill-current" />
-                      </div>
-                    )}
-                    <Link to={`/edukasi/${item.id}`} className="block relative aspect-[16/9] overflow-hidden bg-gray-100">
-                      {thumbnailUrl ? (
-                        <img 
-                          src={thumbnailUrl} 
-                          alt={item.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                           <BookOpen className="w-[2.5rem] h-[2.5rem] text-gray-200" />
+                    {/* Default static border background that disappears on hover */}
+                    <div className="absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gray-100 group-hover:opacity-0 rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem]" />
+
+                    {/* Rotating Border Hover Effect */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem]">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
+                        className="greeting-bubble-line"
+                      />
+                    </div>
+
+                    {/* Inner Content Block */}
+                    <div className="relative z-10 flex flex-col h-full bg-white rounded-[calc(1.25rem-1px)] sm:rounded-[calc(1.5rem-1px)] md:rounded-[calc(2rem-2px)] overflow-hidden">
+                      {item.is_pinned && (
+                        <div className="absolute top-[1rem] right-[1rem] z-10 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white w-[2.25rem] h-[2.25rem] rounded-full flex items-center justify-center shadow-lg shadow-yellow-500/30 ring-4 ring-white">
+                          <Pin className="w-[1.125rem] h-[1.125rem] fill-current" />
                         </div>
                       )}
-                      <div className="absolute inset-x-0 bottom-0 p-[0.75rem] sm:p-[1rem] bg-gradient-to-t from-black/60 to-transparent flex gap-[0.5rem]">
-                         <span className="text-white text-[0.625rem] sm:text-[0.7rem] font-bold uppercase tracking-wider bg-primary-600/80 backdrop-blur-md px-[0.625rem] sm:px-[0.75rem] py-[0.1875rem] sm:py-[0.25rem] rounded-full">
-                           {isVideo ? 'Video' : 'Artikel'}
-                         </span>
-                         {item.topic && (
-                           <span className="text-primary-100 text-[0.625rem] sm:text-[0.7rem] font-bold uppercase tracking-wider bg-black/40 backdrop-blur-md px-[0.625rem] sm:px-[0.75rem] py-[0.1875rem] sm:py-[0.25rem] rounded-full">
-                             {item.topic}
+                      <Link to={`/edukasi/${item.id}`} className="block relative aspect-[16/9] overflow-hidden bg-gray-100">
+                        {thumbnailUrl ? (
+                          <img 
+                            src={thumbnailUrl} 
+                            alt={item.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gray-50">
+                             <BookOpen className="w-[2.5rem] h-[2.5rem] text-gray-200" />
+                          </div>
+                        )}
+                        <div className="absolute inset-x-0 bottom-0 p-[0.75rem] sm:p-[1rem] bg-gradient-to-t from-black/60 to-transparent flex gap-[0.5rem]">
+                           <span className="text-white text-[0.625rem] sm:text-[0.7rem] font-bold uppercase tracking-wider bg-primary-600/80 backdrop-blur-md px-[0.625rem] sm:px-[0.75rem] py-[0.1875rem] sm:py-[0.25rem] rounded-full">
+                             {isVideo ? 'Video' : 'Artikel'}
                            </span>
-                         )}
-                      </div>
-                    </Link>
-
-                    <div className="flex flex-col flex-1 p-[1rem] sm:p-[1.25rem] md:p-[1.5rem]">
-                      <div className="mb-[0.5rem] md:mb-[0.75rem] text-[0.65rem] sm:text-[0.7rem] font-semibold text-gray-400 uppercase tracking-widest">
-                        {displayDate ? new Date(displayDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Baru'}
-                      </div>
-                      <Link to={`/edukasi/${item.id}`}>
-                        <h2 className="text-[1rem] sm:text-[1.125rem] font-bold font-display text-gray-900 leading-tight mb-[0.375rem] sm:mb-[0.5rem] group-hover:text-primary-600 transition-colors line-clamp-2">
-                          {item.title}
-                        </h2>
+                           {item.topic && (
+                             <span className="text-primary-100 text-[0.625rem] sm:text-[0.7rem] font-bold uppercase tracking-wider bg-black/40 backdrop-blur-md px-[0.625rem] sm:px-[0.75rem] py-[0.1875rem] sm:py-[0.25rem] rounded-full">
+                               {item.topic}
+                             </span>
+                           )}
+                        </div>
                       </Link>
-                      <p className="text-gray-500 leading-relaxed mb-[1rem] md:mb-[1.25rem] line-clamp-2 flex-1 text-[0.8125rem] sm:text-[0.875rem]">
-                        {item.subtitle}
-                      </p>
-                      <div className="mt-auto pt-[0.75rem] sm:pt-[1rem] border-t border-gray-50 flex items-center justify-between">
-                        <Link 
-                          to={`/edukasi/${item.id}`}
-                          className="inline-flex items-center gap-[0.375rem] text-primary-600 font-bold text-[0.8125rem] sm:text-[0.875rem] hover:text-primary-700 transition-colors group/btn"
-                        >
-                          Pelajari Selengkapnya
-                          <ArrowRight className="w-[0.8125rem] sm:w-[0.875rem] h-[0.8125rem] sm:h-[0.875rem] transition-transform group-hover/btn:translate-x-1" />
+
+                      <div className="flex flex-col flex-1 p-[1rem] sm:p-[1.25rem] md:p-[1.5rem]">
+                        <div className="mb-[0.5rem] md:mb-[0.75rem] text-[0.65rem] sm:text-[0.7rem] font-semibold text-gray-400 uppercase tracking-widest">
+                          {displayDate ? new Date(displayDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Baru'}
+                        </div>
+                        <Link to={`/edukasi/${item.id}`}>
+                          <h2 className="text-[1rem] sm:text-[1.125rem] font-bold font-display text-gray-900 leading-tight mb-[0.375rem] sm:mb-[0.5rem] group-hover:text-primary-600 transition-colors line-clamp-2">
+                            {item.title}
+                          </h2>
                         </Link>
+                        <p className="text-gray-500 leading-relaxed mb-[1rem] md:mb-[1.25rem] line-clamp-2 flex-1 text-[0.8125rem] sm:text-[0.875rem]">
+                          {item.subtitle}
+                        </p>
+                        <div className="mt-auto pt-[0.75rem] sm:pt-[1rem] border-t border-gray-50 flex items-center justify-between">
+                          <Link 
+                            to={`/edukasi/${item.id}`}
+                            className="inline-flex items-center gap-[0.375rem] text-primary-600 font-bold text-[0.8125rem] sm:text-[0.875rem] hover:text-primary-700 transition-colors group/btn"
+                          >
+                            Pelajari Selengkapnya
+                            <ArrowRight className="w-[0.8125rem] sm:w-[0.875rem] h-[0.8125rem] sm:h-[0.875rem] transition-transform group-hover/btn:translate-x-1" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </motion.article>

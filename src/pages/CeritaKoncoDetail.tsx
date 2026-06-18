@@ -7,6 +7,8 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { getCeritaKoncoById, getCeritaKoncos, CeritaKonco } from "../lib/ceritaKonco";
 import { SEO } from "../components/SEO";
+import { FloatingChatButton } from "../components/FloatingChatButton";
+import { ASSETS } from "../lib/assets";
 
 const normalizeText = (text: string) => text.replace(/\u00A0/g, ' ');
 
@@ -68,7 +70,7 @@ export function CeritaKoncoDetail() {
       <SEO 
         title={`${cerita.title} - Cerita Konco`}
         description={cerita.subtitle_hook || "Kisah inspiratif penyintas kemoterapi."}
-        image={cerita.thumbnail_image || "https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44"}
+        image={cerita.thumbnail_image || ASSETS.LOGO_KONCOKEMO}
         type="article"
         url={`https://koncokemo.com/cerita-konco/${id}`}
         jsonLd={{
@@ -86,7 +88,7 @@ export function CeritaKoncoDetail() {
             "name": "KoncoKemo",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44"
+              "url": ASSETS.LOGO_KONCOKEMO
             }
           },
           "datePublished": cerita.created_at,
@@ -174,7 +176,7 @@ export function CeritaKoncoDetail() {
                {navData.prev ? (
                  <Link 
                    to={`/cerita-konco/${navData.prev}`}
-                   className="group p-[1.5rem] bg-gray-50 rounded-[1.5rem] hover:bg-primary-50 transition-all border border-transparent hover:border-primary-100 flex items-center gap-[1rem]"
+                   className="group p-[1.5rem] bg-gray-50 rounded-[1.5rem] border border-transparent flex items-center gap-[1rem] transition-colors"
                  >
                    <div className="w-[3rem] h-[3rem] rounded-full bg-white flex items-center justify-center text-gray-400 group-hover:text-primary-600 group-hover:scale-110 transition-all shadow-sm">
                      <ChevronLeft className="w-[1.5rem] h-[1.5rem]" />
@@ -190,7 +192,7 @@ export function CeritaKoncoDetail() {
                {navData.next ? (
                   <Link 
                     to={`/cerita-konco/${navData.next}`}
-                    className="group p-[1.5rem] bg-gray-50 rounded-[1.5rem] hover:bg-primary-50 transition-all border border-transparent hover:border-primary-100 flex items-center justify-end text-right gap-[1rem] w-full"
+                    className="group p-[1.5rem] bg-gray-50 rounded-[1.5rem] border border-transparent flex items-center justify-end text-right gap-[1rem] w-full transition-colors"
                   >
                     <div>
                       <span className="block text-[0.625rem] font-black text-gray-400 uppercase tracking-widest mb-[0.25rem]">KISAH BERIKUTNYA</span>
@@ -205,6 +207,7 @@ export function CeritaKoncoDetail() {
            </div>
         </div>
       </div>
+      <FloatingChatButton />
     </div>
   );
 }

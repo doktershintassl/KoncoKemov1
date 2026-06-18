@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { SEO } from "../components/SEO";
-import { Stethoscope, UserX, AlertTriangle, Download, FileText } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Stethoscope, UserX, AlertTriangle, Download, FileText, Home } from "lucide-react";
 import { jsPDF } from "jspdf";
+import { ASSETS } from "../lib/assets";
 
 const THERAPY_MAP: Record<string, { gejala: string; tataLaksana: string }> = {
   "MM": { gejala: "Mual / Muntah", tataLaksana: "Ondansetron 8mg" },
@@ -28,7 +30,7 @@ export default function TataLaksana() {
   useEffect(() => {
     const fetchLogo = async () => {
       try {
-        const response = await fetch("https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44");
+        const response = await fetch(ASSETS.LOGO_KONCOKEMO);
         if (response.ok) {
           const blob = await response.blob();
           const encoded = await new Promise<string>((resolve, reject) => {
@@ -295,20 +297,29 @@ export default function TataLaksana() {
       />
       
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10 px-4 md:px-8 py-4 flex items-center justify-between">
-         <div className="flex items-center gap-3">
-           <img src="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" alt="KoncoKemo" className="w-10 h-10 object-contain" />
+         <Link to="/" className="flex items-center gap-3 group transition-opacity hover:opacity-80">
+           <img src={ASSETS.LOGO_KONCOKEMO} alt="KoncoKemo" className="w-10 h-10 object-contain" />
            <div>
              <h1 className="text-xl font-bold text-primary-800">Tatalaksana Pasien</h1>
              <p className="text-xs text-gray-500 font-medium">Berdasarkan Skrining Cek Mandiri</p>
            </div>
+         </Link>
+         <div className="flex items-center gap-2">
+           <Link 
+             to="/"
+             className="hidden sm:flex items-center gap-2 text-gray-600 hover:text-primary-600 px-4 py-2 text-sm font-semibold transition-colors"
+           >
+             <Home className="w-4 h-4" />
+             Beranda
+           </Link>
+           <button 
+             onClick={downloadPDF}
+             className="hidden sm:flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 hover:bg-primary-100 rounded-lg text-sm font-semibold transition-colors border border-primary-200"
+           >
+             <Download className="w-4 h-4" />
+             Download Laporan PDF
+           </button>
          </div>
-         <button 
-           onClick={downloadPDF}
-           className="hidden sm:flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 hover:bg-primary-100 rounded-lg text-sm font-semibold transition-colors border border-primary-200"
-         >
-           <Download className="w-4 h-4" />
-           Download Laporan PDF
-         </button>
       </header>
 
       <main className="flex-1 w-full max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -355,13 +366,22 @@ export default function TataLaksana() {
            </p>
         </div>
 
-        <button 
-           onClick={downloadPDF}
-           className="w-full sm:hidden flex items-center justify-center gap-2 bg-primary-600 text-white px-4 py-3 hover:bg-primary-700 rounded-xl font-semibold transition-colors"
-         >
-           <Download className="w-5 h-5" />
-           Download Laporan PDF
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3 mt-8">
+          <button 
+            onClick={downloadPDF}
+            className="flex-1 flex items-center justify-center gap-2 bg-primary-600 text-white px-4 py-3 hover:bg-primary-700 rounded-xl font-semibold transition-colors"
+          >
+            <Download className="w-5 h-5" />
+            Download Laporan PDF
+          </button>
+          <Link 
+            to="/"
+            className="flex-1 flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-3 hover:bg-gray-50 rounded-xl font-semibold transition-colors"
+          >
+            <Home className="w-5 h-5" />
+            Beranda
+          </Link>
+        </div>
       </main>
     </div>
   );

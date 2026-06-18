@@ -3,6 +3,7 @@ import { CeritaKoncoHighlight } from "../components/sections/CeritaKoncoHighligh
 import { BeritaTerbaru } from "../components/sections/BeritaTerbaru";
 import { SEO } from "../components/SEO";
 import { siteConfig } from "../config/site";
+import { ASSETS } from "../lib/assets";
 
 export function PublicLayout() {
   return (
@@ -21,7 +22,7 @@ export function PublicLayout() {
             "name": "KoncoKemo",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44"
+              "url": ASSETS.LOGO_KONCOKEMO
             }
           }
         }}

@@ -3,14 +3,16 @@ import { motion, AnimatePresence } from "motion/react";
 import { Search, MapPin, Phone, User, X, Info, Loader2, Hospital, Plus, Star } from "lucide-react";
 import { getDokters, Dokter } from "../lib/dokter";
 import { Button } from "../components/ui/Button";
+import { SearchableSelect } from "../components/ui/SearchableSelect";
 import { SEO } from "../components/SEO";
 
-export function DokterKemo() {
+export function KoncoDokter() {
   const [dokters, setDokters] = useState<Dokter[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [specialization, setSpecialization] = useState("Semua");
   const [kota, setKota] = useState("Semua");
   const [page, setPage] = useState(1);
@@ -30,7 +32,13 @@ export function DokterKemo() {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedSearch(searchQuery), 1500);
+    if (searchQuery !== debouncedSearch) {
+      setIsSearching(true);
+    }
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setIsSearching(false);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
@@ -77,7 +85,7 @@ export function DokterKemo() {
   return (
     <main className="flex-1 w-full max-w-[80rem] mx-auto px-[0.75rem] sm:px-[1.5rem] lg:px-[3rem] pt-[1rem] pb-[2.5rem] md:pt-[2rem] md:pb-[5rem] lg:pt-[2.5rem] lg:pb-[6rem]">
       <SEO 
-        title="Daftar Dokter Kemo dan Onkologi" 
+        title="Daftar Konco Dokter Kemo dan Onkologi" 
         description="Temukan profil, lokasi parktik, dan informasi kontak dari dokter spesialis onkologi dan hematologi terpercaya."
         url="https://koncokemo.com/dokter-kemo"
       />
@@ -89,7 +97,7 @@ export function DokterKemo() {
           transition={{ delay: 0.1 }}
           className="text-[1.5rem] sm:text-[2rem] md:text-[2.75rem] font-display font-bold text-gray-900 tracking-tight leading-tight mb-[0.5rem] md:mb-[0.75rem]"
         >
-          Dokter Kemo
+          Konco Dokter
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
@@ -97,7 +105,7 @@ export function DokterKemo() {
           transition={{ delay: 0.2 }}
           className="text-[0.875rem] sm:text-[1rem] md:text-[1.125rem] text-gray-600 leading-relaxed"
         >
-          Daftar Dokter Onkologi yang siap menemani perjalanan pengobatan Anda
+          Direktori dokter yang siap menemani dan mendampingi perjalanan pengobatan Anda
         </motion.p>
       </div>
 
@@ -105,7 +113,11 @@ export function DokterKemo() {
       <div className="mb-[2rem] md:mb-[4rem]">
         <div className="flex flex-col md:flex-row gap-[1rem] max-w-[64rem]">
           <div className="relative flex-1">
-            <Search className="absolute left-[0.75rem] md:left-[1rem] top-1/2 -translate-y-1/2 w-[1rem] md:w-[1.125rem] h-[1rem] md:h-[1.125rem] text-gray-400" />
+            {isSearching ? (
+              <Loader2 className="absolute left-[0.75rem] md:left-[1rem] top-1/2 -translate-y-1/2 w-[1rem] md:w-[1.125rem] h-[1rem] md:h-[1.125rem] text-primary-500 animate-spin" />
+            ) : (
+              <Search className="absolute left-[0.75rem] md:left-[1rem] top-1/2 -translate-y-1/2 w-[1rem] md:w-[1.125rem] h-[1rem] md:h-[1.125rem] text-gray-400" />
+            )}
             <input 
               type="text"
               placeholder="Cari nama, spesialisasi, rs, area..."
@@ -115,26 +127,22 @@ export function DokterKemo() {
             />
           </div>
           <div className="md:w-[16rem]">
-            <select
+            <SearchableSelect
               value={kota}
-              onChange={(e) => setKota(e.target.value)}
-              className="w-full px-[1rem] py-[0.75rem] md:py-[0.875rem] bg-white border border-gray-200 rounded-[0.75rem] md:rounded-[1rem] shadow-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-[0.875rem] md:text-[1rem] text-gray-700 appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[position:right_1rem_center] bg-no-repeat pr-[2.5rem]"
-            >
-              {cities.map((city) => (
-                <option key={city} value={city}>{city === 'Semua' ? 'Semua Kota' : city}</option>
-              ))}
-            </select>
+              onChange={setKota}
+              options={cities}
+              placeholder="Semua Kota"
+              searchPlaceholder="Cari kota..."
+            />
           </div>
           <div className="md:w-[16rem]">
-            <select
+            <SearchableSelect
               value={specialization}
-              onChange={(e) => setSpecialization(e.target.value)}
-              className="w-full px-[1rem] py-[0.75rem] md:py-[0.875rem] bg-white border border-gray-200 rounded-[0.75rem] md:rounded-[1rem] shadow-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-[0.875rem] md:text-[1rem] text-gray-700 appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[position:right_1rem_center] bg-no-repeat pr-[2.5rem]"
-            >
-              {specializations.map((spec) => (
-                <option key={spec} value={spec}>{spec === 'Semua' ? 'Semua Spesialisasi' : spec}</option>
-              ))}
-            </select>
+              onChange={setSpecialization}
+              options={specializations}
+              placeholder="Semua Spesialisasi"
+              searchPlaceholder="Cari spesialisasi..."
+            />
           </div>
         </div>
       </div>
@@ -160,14 +168,26 @@ export function DokterKemo() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: (index % 12) * 0.05 }}
                 onClick={() => setSelectedDokter(dokter)}
-                className={`group cursor-pointer bg-white border shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden relative ${isFavourite ? 'md:col-span-2 lg:col-span-3 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-br from-primary-50/30 to-white border-primary-200' : 'rounded-[1rem] md:rounded-[1.5rem] border-gray-100'}`}
+                className={`group cursor-pointer relative p-[1px] md:p-[2px] shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block ${isFavourite ? 'md:col-span-2 lg:col-span-3 rounded-[1.5rem] md:rounded-[2rem]' : 'rounded-[1rem] md:rounded-[1.5rem]'}`}
               >
-                {isFavourite && (
-                   <div className="absolute top-[1rem] right-[1rem] md:top-[1.5rem] md:right-[1.5rem] bg-yellow-100 text-yellow-600 border border-yellow-200 px-[0.75rem] py-[0.25rem] rounded-full text-[0.625rem] md:text-[0.75rem] font-black uppercase tracking-widest flex items-center gap-[0.25rem]">
-                      <Star className="w-[0.75rem] h-[0.75rem] fill-yellow-500 text-yellow-500" /> Rekomendasi
-                   </div>
-                )}
-                <div className={`p-[1.125rem] md:p-[2rem] flex flex-col h-full ${isFavourite ? 'md:flex-row md:items-center gap-[1.5rem] md:gap-[3rem]' : ''}`}>
+                {/* Default static border background that disappears on hover */}
+                <div className={`absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gray-100 group-hover:opacity-0 ${isFavourite ? 'rounded-[1.5rem] md:rounded-[2rem]' : 'rounded-[1rem] md:rounded-[1.5rem]'}`} />
+
+                {/* Rotating Border Hover Effect */}
+                <div className={`absolute inset-0 overflow-hidden pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isFavourite ? 'rounded-[1.5rem] md:rounded-[2rem]' : 'rounded-[1rem] md:rounded-[1.5rem]'}`}>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
+                    className="greeting-bubble-line"
+                  />
+                </div>
+
+                <div className={`relative z-10 h-full flex flex-col p-[1.125rem] md:p-[2rem] bg-white ${isFavourite ? 'rounded-[calc(1.5rem-2px)] md:rounded-[calc(2rem-2px)] md:flex-row md:items-center gap-[1.5rem] md:gap-[3rem]' : 'rounded-[calc(1rem-2px)] md:rounded-[calc(1.5rem-2px)]'}`}>
+                  {isFavourite && (
+                     <div className="absolute z-10 top-[1rem] right-[1rem] md:top-[1.5rem] md:right-[1.5rem] bg-yellow-100 text-yellow-600 border border-yellow-200 px-[0.75rem] py-[0.25rem] rounded-full text-[0.625rem] md:text-[0.75rem] font-black uppercase tracking-widest flex items-center gap-[0.25rem]">
+                        <Star className="w-[0.75rem] h-[0.75rem] fill-yellow-500 text-yellow-500" /> Rekomendasi
+                     </div>
+                  )}
                   <div className={`flex items-center gap-[0.875rem] md:gap-[1rem] mb-[1.25rem] md:mb-[1.5rem] ${isFavourite ? 'md:mb-0 md:w-1/3' : ''}`}>
                     <div className={`${isFavourite ? 'w-[4rem] h-[4rem] md:w-[6rem] md:h-[6rem]' : 'w-[3rem] h-[3rem] md:w-[3.5rem] md:h-[3.5rem]'} rounded-full bg-primary-50 flex items-center justify-center text-primary-600 flex-shrink-0 group-hover:bg-primary-600 group-hover:text-white transition-colors duration-300`}>
                       {dokter.image_url ? (

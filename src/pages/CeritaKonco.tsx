@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { getCeritaKoncos, CeritaKonco } from "../lib/ceritaKonco";
 import { SEO } from "../components/SEO";
+import { FloatingChatButton } from "../components/FloatingChatButton";
 
 export function CeritaKoncoList() {
   const [ceritas, setCeritas] = useState<CeritaKonco[]>([]);
@@ -89,39 +90,54 @@ export function CeritaKoncoList() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: (index % 12) * 0.1 }}
-                className="group flex flex-col bg-white rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem] border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                className="group relative p-[1px] md:p-[2px] shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem]"
               >
-                <Link to={`/cerita-konco/${cerita.id}`} className="block relative aspect-[16/10] overflow-hidden bg-gray-100">
-                  {cerita.thumbnail_image && (
-                    <img 
-                      src={cerita.thumbnail_image} 
-                      alt={cerita.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </Link>
-                <div className="flex flex-col flex-1 p-[1rem] sm:p-[1.25rem] md:p-[1.5rem]">
-                  <div className="mb-[0.5rem] md:mb-[0.75rem] text-[0.65rem] sm:text-[0.7rem] font-semibold text-primary-600 uppercase tracking-widest">
-                    {cerita.created_at ? new Date(cerita.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Baru'}
-                  </div>
-                  <Link to={`/cerita-konco/${cerita.id}`}>
-                    <h2 className="text-[1rem] sm:text-[1.125rem] font-bold font-display text-gray-900 leading-tight mb-[0.375rem] sm:mb-[0.5rem] group-hover:text-primary-600 transition-colors line-clamp-2">
-                      {cerita.title}
-                    </h2>
+                {/* Default static border background that disappears on hover */}
+                <div className="absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gray-100 group-hover:opacity-0 rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem]" />
+
+                {/* Rotating Border Hover Effect */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem]">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
+                    className="greeting-bubble-line"
+                  />
+                </div>
+
+                {/* Inner Content Block */}
+                <div className="relative z-10 flex flex-col h-full bg-white rounded-[calc(1.25rem-1px)] sm:rounded-[calc(1.5rem-1px)] md:rounded-[calc(2rem-2px)] overflow-hidden">
+                  <Link to={`/cerita-konco/${cerita.id}`} className="block relative aspect-[16/10] overflow-hidden bg-gray-100">
+                    {cerita.thumbnail_image && (
+                      <img 
+                        src={cerita.thumbnail_image} 
+                        alt={cerita.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </Link>
-                  <p className="text-gray-500 leading-relaxed mb-[1rem] md:mb-[1.25rem] line-clamp-2 flex-1 text-[0.8125rem] sm:text-[0.875rem]">
-                    {cerita.subtitle_hook}
-                  </p>
-                  <div className="mt-auto pt-[0.75rem] sm:pt-[1rem] border-t border-gray-50">
-                    <Link 
-                      to={`/cerita-konco/${cerita.id}`}
-                      className="inline-flex items-center gap-[0.375rem] text-primary-600 font-bold text-[0.875rem] hover:text-primary-700 transition-colors group/btn"
-                    >
-                      Baca Selengkapnya
-                      <ArrowRight className="w-[0.875rem] h-[0.875rem] transition-transform group-hover/btn:translate-x-1" />
+                  <div className="flex flex-col flex-1 p-[1rem] sm:p-[1.25rem] md:p-[1.5rem]">
+                    <div className="mb-[0.5rem] md:mb-[0.75rem] text-[0.65rem] sm:text-[0.7rem] font-semibold text-primary-600 uppercase tracking-widest">
+                      {cerita.created_at ? new Date(cerita.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Baru'}
+                    </div>
+                    <Link to={`/cerita-konco/${cerita.id}`}>
+                      <h2 className="text-[1rem] sm:text-[1.125rem] font-bold font-display text-gray-900 leading-tight mb-[0.375rem] sm:mb-[0.5rem] group-hover:text-primary-600 transition-colors line-clamp-2">
+                        {cerita.title}
+                      </h2>
                     </Link>
+                    <p className="text-gray-500 leading-relaxed mb-[1rem] md:mb-[1.25rem] line-clamp-2 flex-1 text-[0.8125rem] sm:text-[0.875rem]">
+                      {cerita.subtitle_hook}
+                    </p>
+                    <div className="mt-auto pt-[0.75rem] sm:pt-[1rem] border-t border-gray-50">
+                      <Link 
+                        to={`/cerita-konco/${cerita.id}`}
+                        className="inline-flex items-center gap-[0.375rem] text-primary-600 font-bold text-[0.875rem] hover:text-primary-700 transition-colors group/btn"
+                      >
+                        Baca Selengkapnya
+                        <ArrowRight className="w-[0.875rem] h-[0.875rem] transition-transform group-hover/btn:translate-x-1" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </motion.article>
@@ -145,6 +161,8 @@ export function CeritaKoncoList() {
           )}
         </div>
       )}
+
+      <FloatingChatButton />
     </main>
   );
 }

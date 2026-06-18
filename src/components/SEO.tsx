@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { ASSETS } from "../lib/assets";
 
 interface SEOProps {
   title: string;
@@ -16,12 +17,12 @@ export function SEO({
   description, 
   name = "KoncoKemo",
   type = "website",
-  image = "https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44", // Fallback Logo
+  image = "https://koncokemo.com/icon.png", // Full URL needed for OG/Twitter
   url = "https://koncokemo.com",
   keywords = "konco kemo, koncokemo, kemoterapi, pasien kanker, kesehatan, cek mandiri kemoterapi, cerita konco, edukasi kemoterapi, pendampingan kanker, pusat edukasi kanker",
   jsonLd
 }: SEOProps) {
-  const pageTitle = title === name ? `${title} (Konco Kemo)` : `${title} | ${name} (Konco Kemo)`;
+  const pageTitle = title === name ? title : `${name} | ${title}`;
 
   return (
     <Helmet>

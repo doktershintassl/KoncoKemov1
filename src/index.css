@@ -68,9 +68,11 @@
 
 .greeting-bubble-line {
   position: absolute;
-  top: -100%;
-  left: -100%;
-  right: -100%;
-  bottom: -100%;
+  top: 50%;
+  left: 50%;
+  width: 200vw;
+  height: 200vw;
+  margin-top: -100vw;
+  margin-left: -100vw;
   background: conic-gradient(from 0deg, var(--color-primary-500), transparent 75%, var(--color-primary-500));
 }

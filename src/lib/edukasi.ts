@@ -97,6 +97,30 @@ export async function getTopics(): Promise<string[]> {
   return topics.sort();
 }
 
+export async function getKontributors(): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('edukasi')
+    .select('kontributor');
+
+  if (error) {
+    console.error("Error fetching kontributors:", error);
+    return [];
+  }
+
+  const allKontributors = new Set<string>();
+  data.forEach(d => {
+    if (d.kontributor) {
+      try {
+        const parsed = JSON.parse(d.kontributor);
+        if (Array.isArray(parsed)) {
+          parsed.forEach(p => allKontributors.add(p));
+        }
+      } catch(e) {}
+    }
+  });
+  return Array.from(allKontributors).sort();
+}
+
 export async function getEdukasiById(id: string): Promise<Edukasi | null> {
   const { data, error } = await supabase
     .from('edukasi')

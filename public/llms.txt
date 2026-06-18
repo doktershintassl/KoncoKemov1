@@ -17,9 +17,9 @@ KoncoKemo adalah platform digital yang didedikasikan untuk mendampingi pasien ka
 3. **Membangun kekuatan berbasis komunitas** ("konco" berarti teman dalam bahasa Jawa) melalui sharing pengalaman yang saling menguatkan.
 
 ## Akses
-- Halaman Utama: https://koncokemo.com/
-- Edukasi: https://koncokemo.com/edukasi
-- Cek Medis Mandiri: https://koncokemo.com/cek-mandiri
-- Cerita Inspirasi: https://koncokemo.com/cerita-konco
-- Daftar Dokter Spesialis: https://koncokemo.com/dokter-kemo
-- Founder (Dr. dr. Shinta Oktya Wardhani): https://koncokemo.com/founder
+- [Halaman Utama](https://koncokemo.com/)
+- [Edukasi](https://koncokemo.com/edukasi)
+- [Cek Medis Mandiri](https://koncokemo.com/cek-mandiri)
+- [Cerita Inspirasi](https://koncokemo.com/cerita-konco)
+- [Daftar Dokter Spesialis](https://koncokemo.com/dokter-kemo)
+- [Founder (Dr. dr. Shinta Oktya Wardhani)](https://koncokemo.com/founder)

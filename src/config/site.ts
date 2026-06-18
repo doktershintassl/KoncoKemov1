@@ -6,7 +6,9 @@ export const siteConfig = {
     { name: "Cek Mandiri", href: "/cek-mandiri" },
     { name: "Cerita Konco", href: "/cerita-konco" },
     { name: "Edukasi", href: "/edukasi" },
-    { name: "Dokter Kemo", href: "/dokter-kemo" },
+    { name: "Konco Dokter", href: "/dokter-kemo" },
+    { name: "Tanya Dokter", href: "/soon/tanya-dokter" },
+    { name: "Kemonitas", href: "/soon/kemonitas" },
     { name: "Founder", href: "/founder" }
   ],
   hero: {

@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
+import { ASSETS } from "../../lib/assets";
 
 export function Header() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -25,13 +26,13 @@ export function Header() {
       >
         <div className="container mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
           <Link to="/" onClick={handleHomeClick} className="flex items-center gap-3">
-            <img src="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" alt="KoncoKemo Logo" className="w-10 h-10 object-contain" />
+            <img src={ASSETS.LOGO_KONCOKEMO} alt="KoncoKemo Logo" className="w-10 h-10 object-contain" />
             <span className="font-display font-bold text-2xl tracking-tight text-primary-900">
               {siteConfig.name}
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8">
             {siteConfig.navLinks.map((link) => (
               <NavLink 
                 key={link.name} 
@@ -55,7 +56,7 @@ export function Header() {
           <motion.button 
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsSidebarOpen(true)} 
-            className="md:hidden p-2 text-gray-600 hover:text-primary-600 focus:outline-none transition-colors cursor-pointer rounded-lg hover:bg-gray-50 active:bg-gray-100 inline-flex items-center justify-center animate-none"
+            className="lg:hidden p-2 text-gray-600 hover:text-primary-600 focus:outline-none transition-colors cursor-pointer rounded-lg hover:bg-gray-50 active:bg-gray-100 inline-flex items-center justify-center animate-none"
             id="mobile-menu-trigger"
             aria-label="Buka Menu"
           >

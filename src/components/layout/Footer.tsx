@@ -1,6 +1,7 @@
 import { siteConfig } from "../../config/site";
 import { Link } from "react-router-dom";
 import { Instagram, Youtube, MapPin, Mail, Phone } from "lucide-react";
+import { ASSETS } from "../../lib/assets";
 
 export function Footer() {
   return (
@@ -13,7 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-[2.5rem] md:gap-[3rem] mb-[1.5rem] md:mb-[2rem]">
           <div className="md:col-span-2">
             <div className="flex items-center gap-[0.75rem] mb-[1rem] md:mb-[1.5rem]">
-              <img src="https://lh3.googleusercontent.com/d/13A59jDQDvXFFvrpe9uvTdlusw3OKGM44" alt="KoncoKemo Logo" className="w-[2rem] md:w-[2.5rem] h-[2rem] md:h-[2.5rem] object-contain" />
+              <img src={ASSETS.LOGO_KONCOKEMO} alt="KoncoKemo Logo" className="w-[2rem] md:w-[2.5rem] h-[2rem] md:h-[2.5rem] object-contain" />
               <span className="font-display font-bold text-[1.125rem] md:text-[1.25rem] tracking-tight text-primary-900">
                 {siteConfig.name}
               </span>
@@ -107,6 +108,7 @@ export function Footer() {
                 allowFullScreen={false} 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
+                title="Peta Lokasi KoncoKemo di RSSA Malang"
               />
             </div>
           </div>
@@ -122,7 +124,7 @@ export function Footer() {
           <a href="https://maindi.id" target="_blank" rel="noopener noreferrer" className="flex items-center gap-[0.5rem] text-gray-500 text-[0.8125rem] md:text-[0.875rem] hover:text-primary-600 transition-colors">
             Dikembangkan oleh Maindi.id
             <img 
-              src="https://lh3.googleusercontent.com/d/1-4t-OyOrBrV3SEdXyMM1fUhCZ9Rq-E1w" 
+              src={ASSETS.LOGO_MAINDI} 
               alt="Logo Maindi" 
               className="h-[1.5rem] w-[1.5rem] md:h-[1.75rem] md:w-[1.75rem] p-[0.125rem] bg-white rounded-full border border-gray-100 object-contain shadow-sm"
               referrerPolicy="no-referrer"

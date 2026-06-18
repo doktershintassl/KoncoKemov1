@@ -1,16 +1,25 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
+import { ASSETS } from "../lib/assets";
 
 export const GreetingWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const photoUrl = "https://lh3.googleusercontent.com/d/1HFlg0M59eEdR-cgsfi6CSi2CjbB9oTPa";
+  const photoUrl = ASSETS.GREETING_ILLUSTRATION;
 
   useEffect(() => {
     // Munculkan secara elegan setelah halaman dimuat
     const timer = setTimeout(() => setIsOpen(true), 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    if (isOpen) {
+      timer = setTimeout(() => setIsOpen(false), 15000);
+    }
+    return () => clearTimeout(timer);
+  }, [isOpen]);
 
   return (
     <AnimatePresence>

@@ -25,7 +25,11 @@ export function CeritaKoncoHighlight() {
     fetchHighlight();
   }, []);
 
-  if (loading || !highlight) return null;
+  if (loading) {
+    return <section className="py-[3.5rem] md:py-24 bg-white min-h-[500px] animate-pulse" />;
+  }
+
+  if (!highlight) return null;
 
   return (
     <section id="cerita-konco" className="py-[3.5rem] md:py-24 bg-white relative overflow-hidden">
