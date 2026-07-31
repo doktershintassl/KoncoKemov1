@@ -76,3 +76,39 @@
   margin-left: -100vw;
   background: conic-gradient(from 0deg, var(--color-primary-500), transparent 75%, var(--color-primary-500));
 }
+
+/* Floating Quill Toolbar */
+.quill-floating-toolbar .ql-toolbar {
+  display: none;
+  position: sticky;
+  top: 1rem;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f3f4f6 !important;
+  margin: 1rem;
+}
+
+.quill-floating-toolbar.is-toolbar-visible .ql-toolbar {
+  display: block;
+  animation: slideDownFade 0.3s ease;
+}
+
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quill-floating-toolbar .ql-container {
+  border: none !important;
+  font-family: inherit !important;
+  font-size: 1rem !important;
+}
+
+.quill-floating-toolbar .ql-editor {
+  min-height: 500px;
+  padding: 1.5rem !important;
+  padding-bottom: 5rem !important;
+}

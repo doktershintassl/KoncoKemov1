@@ -57,6 +57,8 @@ export function EdukasiEditor() {
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
   const [modalLinkUrl, setModalLinkUrl] = useState("");
 
+  const [showToolbar, setShowToolbar] = useState(false);
+
   const turndownService = useMemo(() => {
     const service = new TurndownService({
       headingStyle: 'atx',
@@ -412,18 +414,28 @@ export function EdukasiEditor() {
             </div>
           </div>
 
-          <div className="space-y-[0.5rem] col-span-1 md:col-span-2 pb-[3rem]">
+          <div className="space-y-[0.5rem] col-span-1 md:col-span-2 pb-[3rem] relative">
             <label className="text-[0.875rem] font-medium text-gray-700">Isi Konten Materi</label>
-            <div className="border border-gray-200 rounded-[1.25rem] bg-white text-left">
+            <div className={`border border-gray-200 rounded-[1.25rem] bg-white text-left relative quill-floating-toolbar ${showToolbar ? 'is-toolbar-visible' : ''}`}>
               <ReactQuill 
                 ref={quillRef}
                 theme="snow" 
                 value={editorHtml} 
                 onChange={setEditorHtml}
                 modules={modules}
-                className="min-h-[500px] border-none"
+                className="border-none"
                 placeholder="Tulis materi edukasi selengkap mungkin di sini..."
               />
+              <div className="sticky bottom-4 right-0 flex justify-end w-full pr-4 pb-4 pointer-events-none z-50">
+                <button 
+                  type="button"
+                  onClick={() => setShowToolbar(!showToolbar)}
+                  className={`pointer-events-auto p-4 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center transition-all duration-300 ${showToolbar ? 'bg-gray-800 text-white rotate-45' : 'bg-primary-600 text-white hover:bg-primary-700 hover:scale-105'}`}
+                  title="Toggle Editor Toolbar"
+                >
+                  <Plus className="w-6 h-6" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -58,14 +58,12 @@ export async function getEdukasis(options?: {
   }
 
   if (options?.ignorePinned) {
-    query = query.order('publish_datetime', { ascending: false, nullsFirst: false });
+    query = query.order('publish_datetime', { ascending: false });
   } else {
     query = query
       .order('is_pinned', { ascending: false })
-      .order('publish_datetime', { ascending: false, nullsFirst: false });
+      .order('publish_datetime', { ascending: false });
   }
-
-  query = query.order('created_at', { ascending: false });
 
   if (options?.page && options?.limit) {
     const from = (options.page - 1) * options.limit;
