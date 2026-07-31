@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowLeft, Calendar, Loader2, PlayCircle, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
+import { ArrowLeft, Calendar, Loader2, PlayCircle, ChevronLeft, ChevronRight, BookOpen, Share2, Link2, MessageCircle } from "lucide-react";
 import { getEdukasiById, getEdukasis, Edukasi } from "../lib/edukasi";
 import { getYoutubeEmbedUrl, isYoutubeUrl } from "../lib/videoUtils";
 import ReactMarkdown from "react-markdown";
@@ -18,6 +18,40 @@ export function EdukasiDetail() {
   const [edukasi, setEdukasi] = useState<Edukasi | null>(null);
   const [loading, setLoading] = useState(true);
   const [navData, setNavData] = useState<{ prev: string | null; next: string | null }>({ prev: null, next: null });
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy', err);
+    }
+  };
+
+  const handleWhatsAppShare = () => {
+    const text = encodeURIComponent(`Halo, baca materi edukasi ini: ${edukasi?.title}\n\n${shareUrl}`);
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+    setShowShareMenu(false);
+  };
+
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: edukasi?.title || 'Edukasi KoncoKemo',
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    }
+    setShowShareMenu(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,6 +147,45 @@ export function EdukasiDetail() {
               <ArrowLeft className="w-[0.875rem] sm:w-[1rem] h-[0.875rem] sm:h-[1rem] transition-transform group-hover:-translate-x-1" /> Kembali ke Edukasi
             </Link>
           
+            <div className="relative">
+              <button 
+                onClick={() => setShowShareMenu(!showShareMenu)}
+                className="inline-flex items-center gap-[0.5rem] px-[1rem] py-[0.5rem] bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-full font-medium text-[0.8125rem] sm:text-[0.875rem] transition-colors"
+              >
+                <Share2 className="w-[0.875rem] sm:w-[1rem] h-[0.875rem] sm:h-[1rem]" /> Bagikan
+              </button>
+              
+              {showShareMenu && (
+                <>
+                  <div 
+                    className="fixed inset-0 z-40"
+                    onClick={() => setShowShareMenu(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden py-1">
+                    <button 
+                      onClick={handleWhatsAppShare}
+                      className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-3 text-gray-700"
+                    >
+                      <MessageCircle className="w-4 h-4 text-green-500" /> WhatsApp
+                    </button>
+                    {typeof navigator !== 'undefined' && navigator.share && (
+                      <button 
+                        onClick={handleNativeShare}
+                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-3 text-gray-700"
+                      >
+                        <Share2 className="w-4 h-4 text-primary-500" /> Opsi Lainnya
+                      </button>
+                    )}
+                    <button 
+                      onClick={handleCopyLink}
+                      className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-3 text-gray-700 border-t border-gray-50"
+                    >
+                      <Link2 className="w-4 h-4 text-gray-500" /> {copied ? 'Tersalin!' : 'Salin Tautan'}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
           
           <div className="flex items-center gap-[0.5rem] text-[0.65rem] sm:text-[0.75rem] font-semibold text-primary-600/70 uppercase tracking-[0.1em] mb-[0.75rem] sm:mb-[1rem]">
