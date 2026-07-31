@@ -102,6 +102,29 @@ export function EdukasiDetail() {
     );
   }
 
+  let kontributorJSX = null;
+  if (edukasi.kontributor) {
+    try {
+      const authors = JSON.parse(edukasi.kontributor);
+      if (Array.isArray(authors) && authors.length > 0) {
+        kontributorJSX = (
+          <div className="mt-[1.5rem] flex flex-wrap items-center gap-[0.75rem]">
+            <span className="text-[0.6875rem] font-black uppercase tracking-widest text-gray-400">Kontributor:</span>
+            <div className="flex flex-wrap gap-[0.5rem]">
+              {authors.map((author: string, idx: number) => (
+                <span key={idx} className="bg-primary-50 text-primary-700 px-[0.75rem] py-[0.25rem] rounded-full text-[0.75rem] font-bold border border-primary-100">
+                  {author}
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+      }
+    } catch (e) {
+      kontributorJSX = null;
+    }
+  }
+
   const isVideo = edukasi.media_type === 'video' || isYoutubeUrl(edukasi.media_url);
   const embedUrl = isVideo ? getYoutubeEmbedUrl(edukasi.media_url) : null;
 
@@ -168,7 +191,7 @@ export function EdukasiDetail() {
                     >
                       <MessageCircle className="w-4 h-4 text-green-500" /> WhatsApp
                     </button>
-                    {typeof navigator !== 'undefined' && navigator.share && (
+                    {typeof navigator !== 'undefined' && Boolean(navigator.share) && (
                       <button 
                         onClick={handleNativeShare}
                         className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-3 text-gray-700"
@@ -208,25 +231,7 @@ export function EdukasiDetail() {
             </p>
           </div>
 
-          {edukasi.kontributor && (() => {
-            try {
-              const authors = JSON.parse(edukasi.kontributor);
-              if (Array.isArray(authors) && authors.length > 0) {
-                return (
-                  <div className="mt-[1.5rem] flex flex-wrap items-center gap-[0.75rem]">
-                    <span className="text-[0.6875rem] font-black uppercase tracking-widest text-gray-400">Kontributor:</span>
-                    <div className="flex flex-wrap gap-[0.5rem]">
-                      {authors.map((author: string, idx: number) => (
-                        <span key={idx} className="bg-primary-50 text-primary-700 px-[0.75rem] py-[0.25rem] rounded-full text-[0.75rem] font-bold border border-primary-100">
-                          {author}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                );
-              }
-            } catch (e) { return null; }
-          })()}
+          {kontributorJSX}
         </motion.div>
 
         {/* Media Section */}

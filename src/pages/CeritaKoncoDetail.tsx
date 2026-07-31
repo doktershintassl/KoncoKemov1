@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowLeft, Loader2, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Loader2, Calendar, ChevronLeft, ChevronRight, Share2, MessageCircle, Link2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -17,6 +17,37 @@ export function CeritaKoncoDetail() {
   const [cerita, setCerita] = useState<CeritaKonco | null>(null);
   const [loading, setLoading] = useState(true);
   const [navData, setNavData] = useState<{ prev: string | null; next: string | null }>({ prev: null, next: null });
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+      setShowShareMenu(false);
+    }, 2000);
+  };
+
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${cerita?.title} - KoncoKemo`,
+          text: cerita?.subtitle_hook || '',
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    }
+  };
+
+  const handleWhatsAppShare = () => {
+    const text = `Halo, baca cerita inspiratif ini: ${cerita?.title}\n\n${window.location.href}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    setShowShareMenu(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,9 +135,50 @@ export function CeritaKoncoDetail() {
             animate={{ opacity: 1, x: 0 }}
             className="w-full"
           >
-            <Link to="/cerita-konco" className="inline-flex items-center gap-[0.5rem] text-primary-600 hover:text-primary-800 font-medium text-[0.8125rem] sm:text-[0.875rem] mb-[1.25rem] sm:mb-[2rem] transition-colors group">
-              <ArrowLeft className="w-[0.875rem] sm:w-[1rem] h-[0.875rem] sm:h-[1rem] transition-transform group-hover:-translate-x-1" /> Kembali ke Daftar
-            </Link>
+            <div className="flex flex-wrap items-center justify-between gap-[0.75rem] mb-[1.25rem] sm:mb-[2rem]">
+              <Link to="/cerita-konco" className="inline-flex items-center gap-[0.5rem] text-primary-600 hover:text-primary-800 font-medium text-[0.8125rem] sm:text-[0.875rem] transition-colors group">
+                <ArrowLeft className="w-[0.875rem] sm:w-[1rem] h-[0.875rem] sm:h-[1rem] transition-transform group-hover:-translate-x-1" /> Kembali ke Daftar
+              </Link>
+              <div className="relative">
+                <button 
+                  onClick={() => setShowShareMenu(!showShareMenu)}
+                  className="inline-flex items-center gap-[0.5rem] px-[1rem] py-[0.5rem] bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-full font-medium text-[0.8125rem] sm:text-[0.875rem] transition-colors"
+                >
+                  <Share2 className="w-[0.875rem] sm:w-[1rem] h-[0.875rem] sm:h-[1rem]" /> Bagikan
+                </button>
+                
+                {showShareMenu && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-40"
+                      onClick={() => setShowShareMenu(false)}
+                    />
+                    <div className="absolute left-0 sm:right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden py-1">
+                      <button 
+                        onClick={handleWhatsAppShare}
+                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-3 text-gray-700"
+                      >
+                        <MessageCircle className="w-4 h-4 text-green-500" /> WhatsApp
+                      </button>
+                      {typeof navigator !== 'undefined' && Boolean(navigator.share) && (
+                        <button 
+                          onClick={handleNativeShare}
+                          className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-3 text-gray-700"
+                        >
+                          <Share2 className="w-4 h-4 text-primary-500" /> Opsi Lainnya
+                        </button>
+                      )}
+                      <button 
+                        onClick={handleCopyLink}
+                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-3 text-gray-700 border-t border-gray-50"
+                      >
+                        <Link2 className="w-4 h-4 text-gray-500" /> {copied ? 'Tersalin!' : 'Salin Tautan'}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
 
             {cerita.thumbnail_image && (
               <div className="relative aspect-[3/4] bg-gray-100 rounded-[1.25rem] sm:rounded-[2rem] overflow-hidden shadow-2xl shadow-primary-900/10 border border-gray-100 max-w-[20rem] md:max-w-none mx-auto sm:mx-0">
