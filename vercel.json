@@ -7,6 +7,14 @@
       "dest": "/api/index.ts"
     },
     {
+      "src": "/edukasi/(.*)",
+      "dest": "/api/index.ts"
+    },
+    {
+      "src": "/cerita-konco/(.*)",
+      "dest": "/api/index.ts"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
