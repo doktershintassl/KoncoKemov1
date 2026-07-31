@@ -78,27 +78,36 @@
 }
 
 /* Floating Quill Toolbar */
+.quill-floating-toolbar {
+  position: relative;
+}
+
 .quill-floating-toolbar .ql-toolbar {
   display: none;
-  position: sticky;
-  top: 1rem;
-  z-index: 40;
-  background: rgba(255, 255, 255, 0.95);
+  position: absolute;
+  top: calc(var(--cursor-top, 0px) - 60px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 95%;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(8px);
   border-radius: 1rem !important;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f3f4f6 !important;
-  margin: 1rem;
+  border: 1px solid #e5e7eb !important;
+  padding: 0.5rem !important;
+  margin: 0;
 }
 
 .quill-floating-toolbar.is-toolbar-visible .ql-toolbar {
   display: block;
-  animation: slideDownFade 0.3s ease;
+  animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes slideDownFade {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes popIn {
+  from { opacity: 0; transform: translate(-50%, 10px) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
 }
 
 .quill-floating-toolbar .ql-container {
@@ -111,4 +120,13 @@
   min-height: 500px;
   padding: 1.5rem !important;
   padding-bottom: 5rem !important;
+}
+
+/* Gear button floating */
+.quill-floating-button {
+  position: absolute;
+  top: calc(var(--cursor-top, 0px) + 0.5rem);
+  right: 1.5rem;
+  z-index: 45;
+  transition: top 0.15s ease-out;
 }

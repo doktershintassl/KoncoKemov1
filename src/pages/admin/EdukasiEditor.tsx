@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Save, Loader2, Info, X, ImageIcon, Link as LinkIcon, Youtube, FileText, PlayCircle, Plus } from "lucide-react";
+import { ArrowLeft, Save, Loader2, Info, X, ImageIcon, Link as LinkIcon, Youtube, FileText, PlayCircle, Settings } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { getEdukasiById, saveEdukasi, Edukasi, getTopics, getKontributors } from "../../lib/edukasi";
 import { convertToLh3Url } from "../../lib/gdriveUtils";
@@ -48,7 +48,16 @@ export function EdukasiEditor() {
 
   // Quill Editor state
   const quillRef = useRef<ReactQuill>(null);
+  const editorWrapperRef = useRef<HTMLDivElement>(null);
   const [editorHtml, setEditorHtml] = useState("");
+  
+  const handleSelectionChange = (range: any, source: string, editor: any) => {
+    if (range && editorWrapperRef.current) {
+      const bounds = editor.getBounds(range.index);
+      const topOffset = Math.max(bounds.top, 0); 
+      editorWrapperRef.current.style.setProperty('--cursor-top', `${topOffset}px`);
+    }
+  };
   
   // Custom Image & Link Modal state
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -416,24 +425,29 @@ export function EdukasiEditor() {
 
           <div className="space-y-[0.5rem] col-span-1 md:col-span-2 pb-[3rem] relative">
             <label className="text-[0.875rem] font-medium text-gray-700">Isi Konten Materi</label>
-            <div className={`border border-gray-200 rounded-[1.25rem] bg-white text-left relative quill-floating-toolbar ${showToolbar ? 'is-toolbar-visible' : ''}`}>
+            <div 
+              ref={editorWrapperRef}
+              className={`border border-gray-200 rounded-[1.25rem] bg-white text-left relative quill-floating-toolbar ${showToolbar ? 'is-toolbar-visible' : ''}`}
+              style={{ '--cursor-top': '0px' } as React.CSSProperties}
+            >
               <ReactQuill 
                 ref={quillRef}
                 theme="snow" 
                 value={editorHtml} 
                 onChange={setEditorHtml}
+                onChangeSelection={handleSelectionChange}
                 modules={modules}
                 className="border-none"
                 placeholder="Tulis materi edukasi selengkap mungkin di sini..."
               />
-              <div className="sticky bottom-4 right-0 flex justify-end w-full pr-4 pb-4 pointer-events-none z-50">
+              <div className="quill-floating-button">
                 <button 
                   type="button"
                   onClick={() => setShowToolbar(!showToolbar)}
-                  className={`pointer-events-auto p-4 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center transition-all duration-300 ${showToolbar ? 'bg-gray-800 text-white rotate-45' : 'bg-primary-600 text-white hover:bg-primary-700 hover:scale-105'}`}
+                  className={`p-3 rounded-full shadow-[0_4px_15px_rgb(0,0,0,0.1)] flex items-center justify-center transition-all duration-300 ${showToolbar ? 'bg-gray-800 text-white rotate-90 scale-110' : 'bg-primary-600 text-white hover:bg-primary-700 hover:scale-110'}`}
                   title="Toggle Editor Toolbar"
                 >
-                  <Plus className="w-6 h-6" />
+                  <Settings className="w-5 h-5" />
                 </button>
               </div>
             </div>
