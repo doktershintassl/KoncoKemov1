@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Save, Loader2, Info, X, ImageIcon, Link as LinkIcon, Youtube, FileText, PlayCircle, Settings } from "lucide-react";
+import { ArrowLeft, Plus, Save, Loader2, Info, X, ImageIcon, Link as LinkIcon, Youtube, FileText, PlayCircle, Settings } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { getEdukasiById, saveEdukasi, Edukasi, getTopics, getKontributors } from "../../lib/edukasi";
 import { convertToLh3Url } from "../../lib/gdriveUtils";
