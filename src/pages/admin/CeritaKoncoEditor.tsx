@@ -12,6 +12,12 @@ import TurndownService from "turndown";
 const TITLE_MAX_LENGTH = 100;
 const SUBTITLE_MAX_LENGTH = 200;
 
+// Utility for datetime-local format
+const toDatetimeLocal = (dateString: string) => {
+  const date = new Date(dateString);
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+};
+
 export function CeritaKoncoEditor() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -21,13 +27,14 @@ export function CeritaKoncoEditor() {
   const [isSaving, setIsSaving] = useState(false);
 
   // Form State
-  const [formData, setFormData] = useState<Omit<CeritaKonco, 'id' | 'created_at'>>({
+  const [formData, setFormData] = useState<Omit<CeritaKonco, 'id'>>({
     title: "",
     patient_name: "",
     subtitle_hook: "",
     thumbnail_image: "",
     content: "",
-    order_index: 0
+    order_index: 0,
+    created_at: new Date().toISOString()
   });
 
   // Quill Editor state
@@ -64,7 +71,8 @@ export function CeritaKoncoEditor() {
               subtitle_hook: cerita.subtitle_hook,
               thumbnail_image: cerita.thumbnail_image,
               content: cerita.content,
-              order_index: cerita.order_index || 0
+              order_index: cerita.order_index || 0,
+              created_at: cerita.created_at || new Date().toISOString()
             });
             // Convert existing markdown to HTML for the rich text editor
             const html = await marked.parse(cerita.content || '');
@@ -232,6 +240,16 @@ export function CeritaKoncoEditor() {
               placeholder="Masukkan hook untuk memancing pembaca"
               value={formData.subtitle_hook}
               onChange={(e) => setFormData(prev => ({ ...prev, subtitle_hook: e.target.value }))}
+            />
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-700">Tanggal Publikasi</label>
+            <input
+              type="datetime-local"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white transition-colors focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:outline-none"
+              value={toDatetimeLocal(formData.created_at || new Date().toISOString())}
+              onChange={(e) => setFormData(prev => ({ ...prev, created_at: new Date(e.target.value).toISOString() }))}
             />
           </div>
 

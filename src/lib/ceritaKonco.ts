@@ -54,32 +54,31 @@ export async function getCeritaKoncoById(id: string): Promise<CeritaKonco | null
   return data as CeritaKonco;
 }
 
-export async function saveCeritaKonco(cerita: Omit<CeritaKonco, 'id' | 'created_at'>, id?: string) {
+export async function saveCeritaKonco(cerita: Omit<CeritaKonco, 'id'>, id?: string) {
+  const dataToSave: any = {
+    title: cerita.title,
+    patient_name: cerita.patient_name,
+    subtitle_hook: cerita.subtitle_hook,
+    thumbnail_image: cerita.thumbnail_image,
+    content: cerita.content,
+    order_index: cerita.order_index || 0
+  };
+
+  if (cerita.created_at) {
+    dataToSave.created_at = cerita.created_at;
+  }
+
   if (id) {
     const { error } = await supabase
       .from('cerita_konco')
-      .update({
-        title: cerita.title,
-        patient_name: cerita.patient_name,
-        subtitle_hook: cerita.subtitle_hook,
-        thumbnail_image: cerita.thumbnail_image,
-        content: cerita.content,
-        order_index: cerita.order_index || 0
-      })
+      .update(dataToSave)
       .eq('id', id);
 
     if (error) throw error;
   } else {
     const { error } = await supabase
       .from('cerita_konco')
-      .insert([{
-        title: cerita.title,
-        patient_name: cerita.patient_name,
-        subtitle_hook: cerita.subtitle_hook,
-        thumbnail_image: cerita.thumbnail_image,
-        content: cerita.content,
-        order_index: cerita.order_index || 0
-      }]);
+      .insert([dataToSave]);
 
     if (error) throw error;
   }

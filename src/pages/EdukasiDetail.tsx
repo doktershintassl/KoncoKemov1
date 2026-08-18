@@ -154,8 +154,8 @@ export function EdukasiDetail() {
               "url": ASSETS.LOGO_KONCOKEMO
             }
           },
-          "datePublished": edukasi.created_at,
-          "dateModified": edukasi.created_at
+          "datePublished": edukasi.publish_datetime || edukasi.created_at,
+          "dateModified": edukasi.publish_datetime || edukasi.created_at
         }}
       />
       <div className="max-w-[85rem] mx-auto px-[0.75rem] sm:px-[1.5rem] lg:px-[4rem] pt-[1rem] pb-[3rem] md:pt-[3rem] md:pb-[5rem] lg:pt-[4rem] lg:pb-[7rem]">
@@ -213,7 +213,7 @@ export function EdukasiDetail() {
           
           <div className="flex items-center gap-[0.5rem] text-[0.65rem] sm:text-[0.75rem] font-semibold text-primary-600/70 uppercase tracking-[0.1em] mb-[0.75rem] sm:mb-[1rem]">
             <Calendar className="w-[0.75rem] sm:w-[0.875rem] h-[0.75rem] sm:h-[0.875rem]" />
-            {edukasi.created_at ? new Date(edukasi.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Baru'}
+            {edukasi.publish_datetime ? new Date(edukasi.publish_datetime).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Baru'}
             <span className="mx-[0.375rem] sm:mx-2 text-gray-200">•</span>
             <span className="flex items-center gap-[0.25rem]">
                {isVideo ? <PlayCircle className="w-[0.75rem] sm:w-3.5 h-[0.75rem] sm:h-3.5" /> : null}
