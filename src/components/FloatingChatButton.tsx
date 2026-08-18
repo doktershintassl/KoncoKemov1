@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
 
 export function FloatingChatButton() {
   return (
@@ -23,8 +22,10 @@ export function FloatingChatButton() {
       }}
       className="fixed bottom-6 right-6 z-[60] md:bottom-10 md:right-10"
     >
-      <Link 
-        to="/soon/sharing"
+      <a 
+        href="https://forms.gle/9RiP5hVNcpZjefk88"
+        target="_blank"
+        rel="noopener noreferrer"
         className="group relative flex items-center bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden"
       >
         <div className="flex items-center h-[52px] sm:h-[60px]">
@@ -40,7 +41,7 @@ export function FloatingChatButton() {
             <span className="font-bold text-sm sm:text-base">Ceritakan Kisahmu</span>
           </div>
         </div>
-      </Link>
+      </a>
     </motion.div>
   );
 }
