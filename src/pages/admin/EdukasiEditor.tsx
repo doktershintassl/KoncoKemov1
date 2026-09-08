@@ -325,7 +325,14 @@ export function EdukasiEditor() {
               type="datetime-local"
               className="w-full px-[1rem] py-[0.75rem] rounded-[0.75rem] border border-gray-200 bg-gray-50/50 focus:bg-white transition-colors focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:outline-none"
               value={toDatetimeLocal(formData.publish_datetime || new Date().toISOString())}
-              onChange={(e) => setFormData(prev => ({ ...prev, publish_datetime: new Date(e.target.value).toISOString() }))}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (!val) return;
+                const dateVal = new Date(val);
+                if (!isNaN(dateVal.getTime())) {
+                  setFormData(prev => ({ ...prev, publish_datetime: dateVal.toISOString() }));
+                }
+              }}
             />
             <p className="text-[0.75rem] text-gray-500 mt-1">Materi hanya muncul di halaman publik setelah waktu ini terlewati.</p>
           </div>

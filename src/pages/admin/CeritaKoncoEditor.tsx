@@ -249,7 +249,14 @@ export function CeritaKoncoEditor() {
               type="datetime-local"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white transition-colors focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:outline-none"
               value={toDatetimeLocal(formData.created_at || new Date().toISOString())}
-              onChange={(e) => setFormData(prev => ({ ...prev, created_at: new Date(e.target.value).toISOString() }))}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (!val) return;
+                const dateVal = new Date(val);
+                if (!isNaN(dateVal.getTime())) {
+                  setFormData(prev => ({ ...prev, created_at: dateVal.toISOString() }));
+                }
+              }}
             />
           </div>
 
