@@ -87,7 +87,7 @@ export function KoncoDokter() {
       <SEO 
         title="Daftar Konco Dokter Kemo dan Onkologi" 
         description="Temukan profil, lokasi parktik, dan informasi kontak dari dokter spesialis onkologi dan hematologi terpercaya."
-        url="https://koncokemo.com/dokter-kemo"
+        url="https://www.koncokemo.com/dokter-kemo"
       />
       {/* Header Section */}
       <div className="max-w-[48rem] mb-[1.5rem] md:mb-[3.5rem]">

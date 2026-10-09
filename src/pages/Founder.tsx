@@ -43,7 +43,7 @@ const FounderPage = () => {
       <SEO 
         title="Tentang Founder - Dr. dr. Shinta Oktya Wardhani" 
         description="Pakar Hematologi Onkologi Medik dan founder KoncoKemo, memastikan setiap pasien mendapatkan keadilan informasi dan dukungan perawatan selagi kemoterapi."
-        url="https://koncokemo.com/founder"
+        url="https://www.koncokemo.com/founder"
         image={photoUrl}
         jsonLd={{
           "@context": "https://schema.org",

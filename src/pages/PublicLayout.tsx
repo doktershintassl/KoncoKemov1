@@ -11,12 +11,13 @@ export function PublicLayout() {
       <SEO 
         title="Beranda" 
         description={siteConfig.description}
+        url="https://www.koncokemo.com/"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "MedicalWebPage",
           "name": siteConfig.name,
           "description": siteConfig.description,
-          "url": "https://koncokemo.com/",
+          "url": "https://www.koncokemo.com/",
           "publisher": {
             "@type": "Organization",
             "name": "KoncoKemo",

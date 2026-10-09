@@ -27,4 +27,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /login/
 
-Sitemap: https://koncokemo.com/sitemap.xml
+Sitemap: https://www.koncokemo.com/sitemap.xml

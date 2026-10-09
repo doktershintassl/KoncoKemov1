@@ -53,7 +53,7 @@ export function CeritaKoncoList() {
       <SEO 
         title="Cerita Konco" 
         description="Kumpulan kisah inspiratif, perjalanan pengobatan, dan harapan dari para penyintas kemoterapi yang akan menguatkan langkah Anda."
-        url="https://koncokemo.com/cerita-konco"
+        url="https://www.koncokemo.com/cerita-konco"
       />
       <div className="max-w-[48rem] mb-[1.25rem] md:mb-[2rem]">
         <motion.h1 

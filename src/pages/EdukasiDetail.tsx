@@ -135,7 +135,7 @@ export function EdukasiDetail() {
         description={edukasi.subtitle || "Materi edukasi kemoterapi dari KoncoKemo."}
         image={!isVideo ? edukasi.media_url : ASSETS.LOGO_KONCOKEMO}
         type="article"
-        url={`https://koncokemo.com/edukasi/${id}`}
+        url={`https://www.koncokemo.com/edukasi/${id}`}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",

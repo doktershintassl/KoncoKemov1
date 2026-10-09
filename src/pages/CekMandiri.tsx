@@ -13,7 +13,7 @@ export function CekMandiriPage() {
       <SEO 
         title="Cek Risiko Mandiri Kemoterapi" 
         description="Layanan evaluasi dan cek risiko mandiri pasca kemoterapi untuk menilai kondisi dan menentukan langkah medis selanjutnya."
-        url="https://koncokemo.com/cek-mandiri"
+        url="https://www.koncokemo.com/cek-mandiri"
       />
       <CekMandiri />
     </div>
@@ -549,7 +549,7 @@ function CekMandiri() {
 
     let qrCodeUrl = "";
     try {
-      qrCodeUrl = await QRCode.toDataURL(`https://koncokemo.com/tatalaksana?p=${b64Payload}`, { margin: 1, width: 300 });
+      qrCodeUrl = await QRCode.toDataURL(`https://www.koncokemo.com/tatalaksana?p=${b64Payload}`, { margin: 1, width: 300 });
     } catch (e) {
       console.error(e);
     }

@@ -103,7 +103,7 @@ export function CeritaKoncoDetail() {
         description={cerita.subtitle_hook || "Kisah inspiratif penyintas kemoterapi."}
         image={cerita.thumbnail_image || ASSETS.LOGO_KONCOKEMO}
         type="article"
-        url={`https://koncokemo.com/cerita-konco/${id}`}
+        url={`https://www.koncokemo.com/cerita-konco/${id}`}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",

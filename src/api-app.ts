@@ -24,7 +24,7 @@ app.get(['/edukasi/:id', '/cerita-konco/:id'], async (req, res, next) => {
     
     let title = 'KoncoKemo | Konco Kemo - Pusat Pemberdayaan & Edukasi Pasien Kanker';
     let description = 'KoncoKemo (Konco Kemo) adalah Pusat Pemberdayaan, Edukasi dan Komunitas Pasien Kanker.';
-    let imageUrl = 'https://koncokemo.com/logo-transparent.png';
+    let imageUrl = 'https://www.koncokemo.com/logo-transparent.png';
     
     if (supabase) {
       if (isEdukasi) {
@@ -75,12 +75,15 @@ app.get(['/edukasi/:id', '/cerita-konco/:id'], async (req, res, next) => {
       }
     }
     
+    const canonicalTag = `<link rel="canonical" href="https://www.koncokemo.com${req.path}" />`;
+    
     const ogTags = `
-    <!-- Open Graph / WA Share Preview injected by server -->
+    <!-- Canonical & Open Graph injected by server -->
+    ${canonicalTag}
     <meta property="og:title" content="${title.replace(/"/g, '&quot;')}" />
     <meta property="og:description" content="${description.replace(/"/g, '&quot;')}" />
     <meta property="og:image" content="${imageUrl}" />
-    <meta property="og:url" content="https://koncokemo.com${req.path}" />
+    <meta property="og:url" content="https://www.koncokemo.com${req.path}" />
     <meta property="og:type" content="article" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${title.replace(/"/g, '&quot;')}" />
@@ -88,6 +91,12 @@ app.get(['/edukasi/:id', '/cerita-konco/:id'], async (req, res, next) => {
     <meta name="twitter:image" content="${imageUrl}" />
     `;
     
+    // Replace default homepage canonical if present, otherwise append to head
+    if (html.includes('<link rel="canonical" href="https://www.koncokemo.com/" />')) {
+      html = html.replace('<link rel="canonical" href="https://www.koncokemo.com/" />', canonicalTag);
+    } else if (html.includes('<link rel="canonical" href="https://koncokemo.com/" />')) {
+      html = html.replace('<link rel="canonical" href="https://koncokemo.com/" />', canonicalTag);
+    }
     html = html.replace('</head>', `${ogTags}</head>`);
     
     if (!isProd && (app as any).vite) {

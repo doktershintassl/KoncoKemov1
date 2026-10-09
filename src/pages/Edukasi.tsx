@@ -71,7 +71,7 @@ export function EdukasiList() {
       <SEO 
         title="Edukasi Pasien" 
         description="Dapatkan informasi akurat terpercaya seputar kemoterapi, efek samping, dan tips perawatan dari tenaga medis profesional."
-        url="https://koncokemo.com/edukasi"
+        url="https://www.koncokemo.com/edukasi"
       />
       
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-[1.5rem] mb-[2rem] md:mb-[3rem]">
